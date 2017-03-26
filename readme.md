@@ -10,13 +10,14 @@ TvrboReact is a clean, concise and easy to understand JS boilerplate, featuring 
 * **Webpack Dev Server**
 * **React Hot Loader 3**
 * **Server side rendering** (Universal)
+
 * **Mocha, Chai, Supertest**
 * **Session management** (Cookies + JSON Web Tokens)
 * **React Media** (Media queries within React)
 * **React Notify Toast**
 * **Babel** (ES6, JSX, decorators, async/await)
 * **PostCSS** (CSS Next, autoprefixer)
-<!--* **Redux DevTools** - With the <a href="https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd">Chrome browser extension</a>-->
+
 * **ESLint**
 * **ExpressJS**
 * **Mongoose**
@@ -50,22 +51,19 @@ This will also perform an initial build.
 
 Then, go to `http://localhost:8080` in your browser and start developing with live reload/react hot loading!
 
-### Build for production
+### Production build
 
 	make build
 
 Will package all the assets into the `public` folder.
 
-### Server management (in production)
-
-	make start
+	make run
 
 Will start the app and serve whatever is in the `public` folder. Stop it by hitting `Ctrl+C`. This is a good way to check the real performance of your app in production conditions.
 
-**NOTE**: You will want to run `make build` first.
+### App management (in a server)
 
-#### PM2
-You can also use a process management tool like **[PM2](http://pm2.keymetrics.io/)**.
+You may want to use a process management tool like **[PM2](http://pm2.keymetrics.io/)**.
 
 Edit `process.yml` to set your project name, execution mode, etc. Four utility tasks are defined:
 
@@ -74,11 +72,34 @@ Edit `process.yml` to set your project name, execution mode, etc. Four utility t
 	make restart
 	make stop
 
+## Coding
+
+### Decorators
+
+To access content in your Redux stores, connect your React components
+
+	@connect({user, products} => {user, products})
+	class View extends Component {
+		...
+	}
+
+If a component uses `Route`, `Switch` or any route-aware component from **React Router**:
+
+	@withRouter
+	class View extends Component {
+		...
+	}
+
+If you were to use both, leave `@withRouter` as the first decorator.
+
+
 ### Configuration
 
 Though Webpack handles ES6 modules by only bundling what's imported instead of the whole module, it may not be a good idea to use a single config file for the server and the client. That's why both are split into separate files and must be included accordingly.
 
-**Server only code** may import `app/config/server.js` and `app/config/client` and use any of its values. However, **files bundled by Webpack** should only import values from `app/config/client`. Otherwise, execution will throw an error to prevent that you bundle any API keys, and other secret data.
+**Server only code** may import `app/config/server.js` and `app/config/client.js` and use any of its values. 
+
+However, **files bundled by Webpack** should only import values from `app/config/client`. Otherwise, execution will throw an error to prevent that you bundle and leak any API keys or other secret data.
 
 Usage:
 
@@ -87,9 +108,9 @@ Usage:
 	console.log(config.HTTP_PORT);
 
 
-	import config from 'app/config/client';
+	import appConfig from 'app/config/client';
 	// ...
-	console.log(config.APP_NAME);
+	console.log(appConfig.APP_NAME);
 
 
 #### Priority
@@ -105,13 +126,6 @@ See `app/config/server.js` for more details.
 * In development, Webpack Dev Server exposes the port `8080`, acting as a proxy to the NodeJS server (port `3000`)
 * Otherwise, NodeJS listens on port `8080` when you start it with `make run`
 * The database is disabled. To enable MongoDB, edit `app/config/server-*.js` and comment/uncomment the `MONGODB_URI` and `MONGODB_TEST_URI` variables accordingly.
-
-### Coding
-
-Decorators:
-
-* To access content in your Redux stores, connect your React components like this: `@connect({user, products} => {user, products})`
-* If a component uses `Route`, `Switch` or any route-aware component from **React Router**, use `@withRouter`. If you were to use both, leave `@withRouter` as the first decorator.
 
 ### Testing
 
