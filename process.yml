@@ -1,0 +1,3 @@
+apps:
+  - script: index.js
+    name: Manhattan Shop

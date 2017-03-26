@@ -1,0 +1,26 @@
+{
+  "parser": "babel-eslint",
+  "plugins": [
+    "react"
+  ],
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "sourceType": "module"
+  },
+  "env": {
+      "browser": true,
+      "node": true,
+      "mocha": true,
+      "es6": true
+  },
+  "rules": {
+      "no-console": 0,
+      "no-unused-vars": 1,
+      "comma-dangle": 1,
+      "no-spaced-func": 2,
+      "space-before-function-paren": [2, "never"]
+  }
+}
