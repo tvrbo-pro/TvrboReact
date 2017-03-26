@@ -30,24 +30,24 @@ function generateAssetsFromTemplate(file) {
 	return result;
 }
 
-// TEMPLATES
+// MAIN FUNCTION
 
-export function enviaMail(email, tipus, parametres) {
+export default function sendEmail(email, tipus, parameters) {
 	var template;
 	if (!email) return Promise.resolve();
 	else if (config.DEBUG) email = config.DEBUG_NOTIFICATIONS_EMAIL;
 
 	switch (tipus) {
 		case 'received':
-			if (!parametres.nick) return Promise.reject(new Error("Empty nick"));
-			template = generateAssetsFromTemplate(process.cwd() + '/app/mail/content/reto-recibido.html');
+			if (!parameters.nick) return Promise.reject(new Error("Empty nick"));
+			template = generateAssetsFromTemplate(process.cwd() + '/app/mail/content/template-1.html');
 
 			return transporter.sendMail({
 				from: emailFrom,
 				to: email,
-				subject: '¡Has recibido un nuevo Duelo!',
-				text: 'Has recibido un nuevo duelo de ' + parametres.nick,
-				html: template.html.replace('{{NICK}}', parametres.nick),
+				subject: 'Email Subject here',
+				text: `Email summary with ${parameters.value}`,
+				html: template.html.replace('{{VALUE}}', parameters.nick),
 				attachments: template.images
 			});
 	}

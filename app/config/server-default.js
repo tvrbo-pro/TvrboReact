@@ -1,6 +1,4 @@
 module.exports = {
-
-    // GENERIC
     DEBUG: true,
 
     APP_NAME: 'Tvrbo React',
@@ -18,23 +16,27 @@ module.exports = {
 
     // SEO
     KEYWORDS: 'Tvrbo React',
-    DESCRIPTION: 'Tvrbo React ©',
+    DESCRIPTION: 'Tvrbo React Description',
     SOCIAL_IMAGE: 'https://github.com/TvrboPro/TvrboReact/media/social.jpg',
     SOCIAL_URL_PUBLISHER: 'https://github.com/TvrboPro/TvrboReact',
     SOCIAL_URL: 'https://github.com/TvrboPro/TvrboReact',
 
     HTTP_PORT: process.env.NODE_ENV != 'production' ? 3000 : 8080,
-    ALLOW_CORS: false,
+		SESSION_MAX_AGE: 1000 * 60 * 60 * 24 * 7, // 1 week
     CACHE_MAX_AGE: 1000 * 60 * 60 * 24 * 3, // 3 days
+    ALLOW_CORS: false,
 
     GOOGLE_ANALYTICS_CODE: '',
 
 		JWT_SECRET: 'KEY_HERE',
 
-    // DATABASE
-    // MONGODB_URI: '', // Leave blank if not used
-    MONGODB_URI: 'mongodb://localhost:27017/test',
-    MONGODB_TEST_URI: 'mongodb://localhost:27017/test_test',
+    // DISABLE DATABASE
+    MONGODB_URI: '',
+    MONGODB_TEST_URI: '',
+
+		// ENABLE DATABASE
+    // MONGODB_URI: 'mongodb://localhost:27017/test',
+    // MONGODB_TEST_URI: 'mongodb://localhost:27017/test_test',
 
     // RESTRICT ACCESS
     HTTP_USER: '',

@@ -2,10 +2,15 @@ import React, { Component } from 'react';
 
 class NotFound extends Component {
 	static propTypes = {
-		// params: React.PropTypes.object
+		staticContext: React.PropTypes.object
 	}
 
 	render() {
+		if(this.props.staticContext){
+			// Tell the server
+			this.props.staticContext.status = 404;
+		}
+
 		return (
 			<div id="not-found">
 				<h3>Not Found</h3>

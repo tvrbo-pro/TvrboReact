@@ -85,7 +85,6 @@ webpack:
 	@echo
 	@echo "# Running webpack"
 	NODE_ENV=production webpack --colors --progress -p --config webpack.prod.config.js
-	@#rollup --config rollup.config.js
 
 
 ####################################
@@ -108,13 +107,7 @@ watch-server:
 run:
 	@echo
 	@echo "# Starting server"
-	NODE_ENV=production EMBAJADORES_DEBUG= node .
-
-po-extract:
-	gulp --gulpfile gulp.lang.js extract
-
-po-compile:
-	gulp --gulpfile gulp.lang.js compile
+	NODE_ENV=production DEBUG= node .
 
 launch:
 	@sleep 3
@@ -144,10 +137,7 @@ wipe:
 ## SERVER TARGETS
 
 start:
-	@if [ "`node -e \"var config = require('./app/config/server'); console.log(config.DEBUG ? 'debug' : '')\"`" ]; then \
-		make ; \
-	fi
-	NODE_ENV=production EMBAJADORES_DEBUG= pm2 start process.yml
+	NODE_ENV=production DEBUG= pm2 start process.yml || make run
 	pm2 dump
 
 stop:

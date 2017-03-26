@@ -1,7 +1,7 @@
 import config from './config/server';
 import express from 'express';
 import serveStatic from 'serve-static';
-// import favicon from 'serve-favicon';
+import favicon from 'serve-favicon';
 import cookieParser from 'cookie-parser';
 
 import fs from 'fs';
@@ -11,10 +11,6 @@ import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router'
 import { renderToString } from 'react-dom/server';
 import App from './app.jsx';
-
-// import match from 'react-router/lib/match';
-// import Root from './root';
-// import getRoutes from './routes.jsx';
 
 import basicAuth from 'basic-auth';
 import apiRouter from './api';
@@ -46,7 +42,7 @@ if(!config.DEBUG) {
 var app = express();
 
 // FAVICON
-// app.use(favicon(path.join(__dirname, 'media', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'media', 'favicon.ico')));
 
 // HTTP AUTH?
 if(config.HTTP_USER && config.HTTP_PASSWORD){
@@ -68,22 +64,21 @@ app.get('/main.bundle.css', (req, res) => {
   res.setHeader('Cache-Control', 'public, max-age=' + (config.CACHE_MAX_AGE/1000));
   res.send(cssContent);  // vendor is served here - app is embedded
 });
+
 app.use(serveStatic(path.join(__dirname, '..', 'public'), { maxAge: config.CACHE_MAX_AGE }));
 
+// API
 app.use(cookieParser()); // The API router and the initial render need them
 app.use(apiRouter);
 
 // RENDER THE MAIN PAGE
-
 app.use(decodeAuth, async (req, res) => {
-	// req.user is set from decodeAuth
+	// req.user is set in decodeAuth
 	try {
+    const context = {};
 		const store = await makeInitialStore({
 			userId: req.user && req.user._id
 		});
-    const initialState = dehydrate(store);
-    const context = {};
-
     const markup = renderToString(
       <Provider store={ store }>
         <StaticRouter location={req.url} context={context}>
@@ -99,7 +94,11 @@ app.use(decodeAuth, async (req, res) => {
       return res.status(404).send('');
     }
     else {
-      return res.send(renderPage(markup, initialState));
+      const initialState = dehydrate(store);
+      if(context.status)
+        return res.status(context.status).send(renderPage(markup, initialState));
+      else
+        return res.send(renderPage(markup, initialState));
     }
 	}
 	catch(err){
@@ -112,9 +111,6 @@ app.use(decodeAuth, async (req, res) => {
 // HELPER FUNCTIONS
 
 function renderPage(markup, initialState) {
-
-  // const markup = renderToString( <Root type='server' store={store} renderProps={renderProps}/> );
-
   if(config.DEBUG){
     // DEBUG: The bundle is served separately
     //        The initial FOUC is hidden

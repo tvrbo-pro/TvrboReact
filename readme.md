@@ -1,37 +1,38 @@
 #TvrboReact
 
 ## Features
-TvrboReact is a boilerplate that features the state of the art technologies from the React ecosystem. It provides out of the box support and examples for the following:
+TvrboReact is an easy to understand boilerplate, featuring the state of the art technologies from the React ecosystem. It provides out of the box support for:
 
 * **React**
-* **Redux**
+* **Redux** and **Redux Thunk**
 * **React Router 4**
-<!--* **React i18Next** - Providing tools for template extraction, gettext files translation and more.-->
-* **Webpack 2**
+* **Webpack 2** (Tree Shaking)
 * **Webpack Dev Server**
-* **Babel**
 * **React Hot Loader 3**
+* **Server side rendering** (Universal)
+* **Mocha, Chai, Supertest**
+* **Session + JSON Web Tokens**
+* **React Media** (Media queries)
+* **React Notify Toast**
+* **Babel**
+* **Decorators**
+* **PostCSS**
+* **Autoprefixer**
 * **Redux DevTools** - You need to install the <a href="https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd">Chrome browser extension</a>
 * **Node 6-7**
 * **ExpressJS**
-* **ES6/JSX**
-* **PostCSS**
-* **Autoprefixer**
 * **Mongoose**
-* **Async / await**
-* **Server-side rendering**
-* **Decorators**
+* **Nodemailer**
 * **PM2**
-* **makefile**
+* **makefile** tasks
 
 ## Getting Started
 Here's how you get started:
 
 ### Requirements
-Make sure you have `node` and `npm` installed.
+Make sure you have `node` 7.6 or newer installed.
 
 	brew install node
-
 
 ### Clone the Repository
 
@@ -41,8 +42,6 @@ Make sure you have `node` and `npm` installed.
 
 	make install
 
-<!-- Using the yeoman generator should install the dependencies automatically.-->
-
 You should now be able to run `make info` and see the full list of commands available to you.
 
 ### Live development
@@ -50,6 +49,8 @@ You should now be able to run `make info` and see the full list of commands avai
 	make dev
 
 Then, go to `http://localhost:8080` in your browser and start developing with live reload/react hot loading!
+
+By default, the database is disabled. If you want to enable it, open `app/config/server-default.js` and comment/uncomment the `MONGODB_URI` and `MONGODB_TEST_URI` variables accordingly.
 
 ### Build for production
 
@@ -63,23 +64,26 @@ Will package all the assets into the `public` folder.
 
 Will start the app and serve whatever is in the `public` folder. Stop it by hitting `Ctrl+C`. This is a good way to check the real performance of your app in production conditions.
 
-**NOTE**: You will need to run `npm run build` first.
+**NOTE**: You will want to run `make build` first.
 
 You can also use a process management tool like **[PM2](http://pm2.keymetrics.io/)**:
 
-	npm run pm2:start
+	make start
 
 	# or
-	npm run pm2:restart
+	make reload
 
 	# or
-	npm run pm2:stop
+	make restart
 
+	# or
+	make stop
 
+<!--
 ### Localization
 #### Template extraction
 
-	npm run po:extract
+	make po:extract
 
 Will extract the strings contained within `t("Translatable text inside t(...)")` and will generate/update the necessary template files for translation.
 
@@ -91,9 +95,9 @@ Running this command will not wipe existing strings. Contents that are no longer
 
 #### Compiling from a .po file
 
-	npm run po:compile
+	make po:compile
 
-Reads all the `.po` files inside `app/locales/<lang>/` and compiles their content into the corresponding `translate.json` file.
+Reads all the `.po` files inside `app/locales/<lang>/` and compiles their content into the corresponding `translate.json` file.-->
 
 ### Deploy to Heroku
 To deploy the app to Heroku, follow these steps:
@@ -105,28 +109,39 @@ To deploy the app to Heroku, follow these steps:
 * Run `git push heroku master`
 * Open `https://APP_NAME.herokuapp.com` in your browser
 
-<!--### Project structure
+## Project structure
 
 	app
-		action_creators   >  Action creators for Redux actions
 		api               >  Implement here the API to interact with the database
-		locales           >  Translation files
+		config            >  Client/server settings, development/production.
+		lib
+			actions.js      >  Action creators
+			api.js          >  Client side api wrappers
+			session.js      >  Manage user sessions (check login, decode payload, etc)
+			...             (your own utilities)
+
+		mail              >  Mailing utilities with builtin image attachments
 		media             >  Media files that will be copied to 'public/media' on run
+		models            >  Your Mongoose data models
 		reducers          >  Implement the logic to create new states upon actions
-		styles            >  Provide styling (Sass) for your components
-		tests             >  Write your own tests here
-		views             >  JSX components intended to be rendered as pages
+		store             >  Redux store creation and composition
+		styles            >  Provide styling for your components
+		views             >  JSX components intended to be used as pages
 		widgets           >  Smaller JSX components intended for encapsulation and reuse
 
-		client.jsx        >  The entry point of the client JS
-		client.config.js  >  Static JS settings
-		server.jsx        >  The entry point of the server
-		server.config.js  >  Dynamic settings not suitable for Webpack bundling
-		routes.jsx        >  Define your URL routes here
-		store.jsx         >  Create and manage the Redux Store here
+		app.jsx           >  The root component (define your main routes here)
+		client.jsx        >  The entry point of the client render
+		server.jsx        >  The entry point of the server render
+
+	test
+		index.js           >  The test runner
+		tests              >  Write your own tests here
+		populate.js        >  (Utility) Populate sample content (DB)
+		wipe.js            >  (Utility) Remove DB contents
 
 	index.js             >  The start script for the server
-	gulp.lang.js         >  Performs the translation template extraction and compilation
+	makefile             >  Tasks definition
+	process.yml          >  PM2 config file
 	webpack.*.config.js  >  Webpack development and production settings
 
-	public               >  Folder where everything is packaged and served from-->
+	public               >  Folder where everything is packaged and served from

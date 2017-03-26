@@ -1,11 +1,11 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 // import { connect } from 'react-redux';
 
 // @connect(({ app }) => ({ app }))
 class Header extends Component {
 	static propTypes = {
-		app: PropTypes.object.isRequired
+		// app: PropTypes.object.isRequired
 	}
 
 	render() {

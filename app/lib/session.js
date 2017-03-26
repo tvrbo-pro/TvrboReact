@@ -21,13 +21,13 @@ export function decodeAuth(req, res, next) {
 
 export function enforceAuth(req, res, next) {
 	if (!req.cookies || !req.cookies.jwt) {
-		return res.status(401).send({ url: '/login' });
+		return res.status(403).send({ url: '/login' });
 	}
 
 	// decode
 	const payload = jwt.verify(req.cookies.jwt, config.JWT_SECRET, {});
 	if (typeof payload != 'object' || !payload._id) {
-		return res.status(401).send({ url: '/login' });
+		return res.status(403).send({ url: '/login' });
 	}
 	req.user = payload;
 
@@ -39,15 +39,12 @@ export function updateSession(res, user) {
 
 	const payload = {
 		_id: user && user._id,
-		nom: user && user.nom,
-		estat: user && user.estat,
-		tipus: user && user.tipus,
-		nick: user && user.nick,
+		name: user && user.name,
 		email: user && user.email
 	};
-	const token = jwt.sign(payload, config.JWT_SECRET, { expiresIn: 60 * 30 }); // 30 min
+	const token = jwt.sign(payload, config.JWT_SECRET, { expiresIn: config.SESSION_MAX_AGE / 1000 }); // 30 min
 
-	res.cookie('jwt', token, { maxAge: 1000 * 60 * 30, httpOnly: !config.DEBUG, secure: !config.DEBUG });
+	res.cookie('jwt', token, { maxAge: config.SESSION_MAX_AGE, httpOnly: !config.DEBUG, secure: !config.DEBUG });
 }
 
 export function clearSession(res) {
