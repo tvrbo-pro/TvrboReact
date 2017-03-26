@@ -8,13 +8,13 @@ const router = express.Router();
 router.post('/events', [ enforceAuth, registerEvent ]);
 
 export function registerEvent(req, res){
-	if(!req.body.tipus || !req.body.text || eventTypes.includes(req.body.tipus))
+	if(!req.body.type || !req.body.text || eventTypes.includes(req.body.type))
 		return res.status(406).send({error: "Invalid parameters"});
 
-	createEvent(req.user, req.body.tipus, req.body.text, req.body.payload);
-	updateSession(res, {_id: req.body.usuari});
+	createEvent(req.user, req.body.type, req.body.text, req.body.payload);
+	updateSession(res, {_id: req.body.user});
 
 	res.send({});
 }
 
-module.exports = router;
+export default router;

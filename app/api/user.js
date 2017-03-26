@@ -24,7 +24,7 @@ router.delete('/users/me', [ enforceAuth, removeAccount]);
 async function getUser(req, res) {
 	var user = await User.findById(req.user._id).lean().exec();
 	if(!user) return res.status(404).send({error: "Not found"});
-	else if(user.estat == "removed") return res.send({error: "Your account has been removed"});
+	else if(user.state == "removed") return res.send({error: "Your account has been removed"});
 
 	// Refresh cookie
 	updateSession(res, user);
@@ -34,13 +34,16 @@ async function getUser(req, res) {
 async function getSession(req, res, next) {
 	var user = await User.findById(req.user._id).lean().exec();
 	if(!user) return res.send({error: "Not found"});
-	else if(user.estat == "removed") return res.send({error: "Your account has been removed"});
+	else if(user.state == "removed") return res.send({error: "Your account has been removed"});
 
 	// Refresh cookie
 	updateSession(res, user);
 
 	try {
-		const state = {}; //await getUserState({user});
+		const state = {};
+
+		// TODO: Generate the current state of a session here
+
 		res.send(state);
 	}
 	catch(err){
@@ -49,21 +52,26 @@ async function getSession(req, res, next) {
 }
 
 async function userLogin(req, res){
-	if(!req.body.email || !req.body.email.toLowerCase || !req.body.password) return res.send({error: "Introduce tu correo electrónico y tu password de Médicamente para continuar"});
+	if(!req.body.email || !req.body.email.toLowerCase || !req.body.password) return res.send({error: "Provide your email and password to continue"});
 
 	var user;
 
 	try {
-		// TODO
 		user = await User.findOne({email: req.body.email.toLowerCase()}).lean().exec();
+
+		// TODO: Use the authentication method of your choice here
+
+		// Refresh cookie
+		updateSession(res, user);
+		createEvent(user, 'login', `${user.nick} signed in`);
+
 		res.send(user);
 	}
 	catch(err){
 		if(err) res.send({error: err && err.message || err});
-		else res.send({error: "No se ha podido conectar con Médicamente"});
+		else res.status(500).send({error: "Internal error"});
 		return;
 	}
-	updateSession(res, user);
 }
 
 function userLogout(req, res) {
@@ -72,20 +80,24 @@ function userLogout(req, res) {
 }
 
 async function userSignUp(req, res){
-	if(!req.body.email || !req.body.password || !req.body.name || !req.body.lastName) return res.send({error: "Complete your data"});
+	if(!req.body.email || !req.body.password || !req.body.name || !req.body.lastName) return res.send({error: "Provide your data to continue"});
 
 	try {
 		const user = await User.create({
 			email: req.body.email.toLowerCase(),
 			name: req.body.name,
-			lastName: req.body.lastName
+			lastName: req.body.lastName,
+			state: 'pending'
 		});
-		createEvent(user, 'register', user.nick + ` has joined ${config.APP_NAME}`);
+
+		// TODO: Implement your validation logic here
+
+		createEvent(user, 'register', `${user.nick} has joined ${config.APP_NAME}`);
 		res.send(user);
 	}
 	catch(err){
 		if(err && err.message) res.send({error: err.message || err});
-		else res.send({error: `Ha ocurrido un error y no se puede completar el registro a ${config.APP_NAME}`});
+		else res.send({error: `Could not complete the register to ${config.APP_NAME}`});
 	}
 }
 
@@ -101,6 +113,7 @@ async function updateUser(req, res, next){
 		const newUser = await User.findByIdAndUpdate(user._id, updates, {new: true}).lean().exec();
 		if(!newUser) return res.send({error: 'Not found'});
 
+		// Refresh cookie
 		updateSession(res, newUser);
 		res.send(newUser);
 	}
@@ -113,7 +126,9 @@ async function passwordReset(req, res){
 	if(!req.body.email) return res.status(406).send({error: "Invalid parameters"});
 
 	try {
-		// TODO
+
+		// TODO: Implement your logic here
+
 		res.send({});
 	}
 	catch(err){
@@ -122,7 +137,10 @@ async function passwordReset(req, res){
 }
 
 function removeAccount(req, res){
-	// TODO
+
+	// TODO: Implement your logic here
+
+	res.send({});
 }
 
-module.exports = router;
+export default router;

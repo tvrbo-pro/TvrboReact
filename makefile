@@ -115,7 +115,7 @@ launch:
 	@node -e "require('open')('http://localhost:8080');"
 
 install:
-	npm install
+	yarn || npm install
 
 ####################################
 ## TEST

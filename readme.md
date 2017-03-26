@@ -1,35 +1,34 @@
 #TvrboReact
 
 ## Features
-TvrboReact is an easy to understand boilerplate, featuring the state of the art technologies from the React ecosystem. It provides out of the box support for:
+TvrboReact is a clean, concise and easy to understand JS boilerplate, featuring the state of the art technologies from the React ecosystem. It provides out of the box support for:
 
 * **React**
-* **Redux** and **Redux Thunk**
+* **Redux** + **Redux Thunk**
 * **React Router 4**
 * **Webpack 2** (Tree Shaking)
 * **Webpack Dev Server**
 * **React Hot Loader 3**
 * **Server side rendering** (Universal)
 * **Mocha, Chai, Supertest**
-* **Session + JSON Web Tokens**
-* **React Media** (Media queries)
+* **Session management** (Cookies + JSON Web Tokens)
+* **React Media** (Media queries within React)
 * **React Notify Toast**
-* **Babel**
-* **Decorators**
-* **PostCSS**
-* **Css Next**
-* **Redux DevTools** - You need to install the <a href="https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd">Chrome browser extension</a>
+* **Babel** (ES6, JSX, decorators, async/await)
+* **PostCSS** (CSS Next, autoprefixer)
+<!--* **Redux DevTools** - With the <a href="https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd">Chrome browser extension</a>-->
+* **ESLint**
 * **ExpressJS**
 * **Mongoose**
 * **Nodemailer**
 * **PM2**
-* **makefile** tasks
+* **makefile** (development and server tasks)
 
 ## Getting Started
 Here's how you get started:
 
 ### Requirements
-Make sure you have `node` 7.6 or newer installed.
+Make sure you have NodeJS 7.6 or newer installed.
 
 	brew install node
 
@@ -37,19 +36,19 @@ Make sure you have `node` 7.6 or newer installed.
 
 	git clone https://github.com/TvrboPro/TvrboReact.git
 
+You should now be able to run `make info` and see the full list of commands available to you.
+
 ### Install the dependences
 
 	make install
 
-You should now be able to run `make info` and see the full list of commands available to you.
+This will also perform an initial build.
 
 ### Live development
 
 	make dev
 
 Then, go to `http://localhost:8080` in your browser and start developing with live reload/react hot loading!
-
-By default, the database is disabled. If you want to enable it, open `app/config/server-default.js` and comment/uncomment the `MONGODB_URI` and `MONGODB_TEST_URI` variables accordingly.
 
 ### Build for production
 
@@ -65,18 +64,64 @@ Will start the app and serve whatever is in the `public` folder. Stop it by hitt
 
 **NOTE**: You will want to run `make build` first.
 
-You can also use a process management tool like **[PM2](http://pm2.keymetrics.io/)**:
+#### PM2
+You can also use a process management tool like **[PM2](http://pm2.keymetrics.io/)**.
+
+Edit `process.yml` to set your project name, execution mode, etc. Four utility tasks are defined:
 
 	make start
-
-	# or
 	make reload
-
-	# or
 	make restart
-
-	# or
 	make stop
+
+### Configuration
+
+Though Webpack handles ES6 modules by only bundling what's imported instead of the whole module, it may not be a good idea to use a single config file for the server and the client. That's why both are split into separate files and must be included accordingly.
+
+**Server only code** may import `app/config/server.js` and `app/config/client` and use any of its values. However, **files bundled by Webpack** should only import values from `app/config/client`. Otherwise, execution will throw an error to prevent that you bundle any API keys, and other secret data.
+
+Usage:
+
+	import config from 'app/config/server';
+	// ...
+	console.log(config.HTTP_PORT);
+
+
+	import config from 'app/config/client';
+	// ...
+	console.log(config.APP_NAME);
+
+
+#### Priority
+
+The client version will export the raw data in `app/config.client.js`.
+
+The server config will look for any key defined in `app/config/server-*.js`. If an environment variable (prefixed or not) with the same name is defined, it will override the static value.
+
+See `app/config/server.js` for more details.
+
+#### Defaults
+
+* In development, Webpack Dev Server exposes the port `8080`, acting as a proxy to the NodeJS server (port `3000`)
+* Otherwise, NodeJS listens on port `8080` when you start it with `make run`
+* The database is disabled. To enable MongoDB, edit `app/config/server-*.js` and comment/uncomment the `MONGODB_URI` and `MONGODB_TEST_URI` variables accordingly.
+
+### Coding
+
+Decorators:
+
+* To access content in your Redux stores, connect your React components like this: `@connect({user, products} => {user, products})`
+* If a component uses `Route`, `Switch` or any route-aware component from **React Router**, use `@withRouter`. If you were to use both, leave `@withRouter` as the first decorator.
+
+### Testing
+
+Run `make test` and let the magic happen. This will provide you detailed information in case of failure. To get a cleaner summary, you may run `make check` instead.
+
+### Utilities
+
+* You can use `test/populate.js` to add your code for sample data creation in your database. Run it with `make populate`.
+* You can use `test/wipe.js` to clean any data in your local database and repopulate it again. Use `make wipe` for this.
+* Use `make todo` to highlight any pending changes you might have commented in your code
 
 <!--
 ### Localization
@@ -98,17 +143,7 @@ Running this command will not wipe existing strings. Contents that are no longer
 
 Reads all the `.po` files inside `app/locales/<lang>/` and compiles their content into the corresponding `translate.json` file.-->
 
-### Deploy to Heroku
-To deploy the app to Heroku, follow these steps:
-
-* [Download the Heroku toolbelt](https://toolbelt.heroku.com) and create a [Heroku account](https://www.heroku.com)
-* Log in with `heroku login`
-* Run `git init`
-* Run `heroku create <APP_NAME>`
-* Run `git push heroku master`
-* Open `https://APP_NAME.herokuapp.com` in your browser
-
-## Project structure
+### Project structure
 
 	app
 		api               >  Implement here the API to interact with the database
@@ -144,3 +179,13 @@ To deploy the app to Heroku, follow these steps:
 	webpack.*.config.js  >  Webpack development and production settings
 
 	public               >  Folder where everything is packaged and served from
+
+### Deploy to Heroku
+To deploy the app to Heroku, follow these steps:
+
+* [Download the Heroku toolbelt](https://toolbelt.heroku.com) and create a [Heroku account](https://www.heroku.com)
+* Log in with `heroku login`
+* Run `git init`
+* Run `heroku create <APP_NAME>`
+* Run `git push heroku master`
+* Open `https://APP_NAME.herokuapp.com` in your browser
