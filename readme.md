@@ -1,7 +1,7 @@
 # TvrboReact
 
 ## Features
-TvrboReact is a clean, concise and easy to understand JS boilerplate, featuring the state of the art technologies from the React ecosystem. It provides out of the box support for:
+TvrboReact is a clean, concise and easy to understand JS starter project. It features the state of the art technologies from the React ecosystem, providing support for:
 
 * **React**
 * **Redux** + **Redux Thunk**
@@ -10,14 +10,12 @@ TvrboReact is a clean, concise and easy to understand JS boilerplate, featuring 
 * **Webpack Dev Server**
 * **React Hot Loader 3**
 * **Server side rendering** (Universal)
-
 * **Mocha, Chai, Supertest**
 * **Session management** (Cookies + JSON Web Tokens)
 * **React Media** (Media queries within React)
 * **React Notify Toast**
 * **Babel** (ES6, JSX, decorators, async/await)
 * **PostCSS** (CSS Next, autoprefixer)
-
 * **ESLint**
 * **ExpressJS**
 * **Mongoose**
@@ -97,7 +95,7 @@ If you were to use both, leave `@withRouter` as the first decorator.
 
 Though Webpack handles ES6 modules by only bundling what's imported instead of the whole module, it may not be a good idea to use a single config file for the server and the client. That's why both are split into separate files and must be included accordingly.
 
-**Server only code** may import `app/config/server.js` and `app/config/client.js` and use any of its values. 
+**Server only code** may import `app/config/server.js` and `app/config/client.js` and use any of its values.
 
 However, **files bundled by Webpack** should only import values from `app/config/client`. Otherwise, execution will throw an error to prevent that you bundle and leak any API keys or other secret data.
 
