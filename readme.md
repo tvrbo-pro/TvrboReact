@@ -17,9 +17,8 @@ TvrboReact is an easy to understand boilerplate, featuring the state of the art 
 * **Babel**
 * **Decorators**
 * **PostCSS**
-* **Autoprefixer**
+* **Css Next**
 * **Redux DevTools** - You need to install the <a href="https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd">Chrome browser extension</a>
-* **Node 6-7**
 * **ExpressJS**
 * **Mongoose**
 * **Nodemailer**

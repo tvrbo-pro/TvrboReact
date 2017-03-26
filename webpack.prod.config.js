@@ -1,8 +1,8 @@
-var path = require('path');
-var config = require('./app/config/server');
-var autoprefixer = require('autoprefixer');
-var webpack = require('webpack');
-var ExtractTextPlugin = require("extract-text-webpack-plugin"); // Independent CSS file
+const path = require('path');
+const config = require('./app/config/server');
+const cssNext = require("postcss-cssnext");
+const webpack = require('webpack');
+const ExtractTextPlugin = require("extract-text-webpack-plugin"); // Independent CSS file
 
 module.exports = {
 	context: __dirname + "/app",
@@ -55,7 +55,7 @@ module.exports = {
 						{
 							loader: 'postcss-loader',
 							options: {
-								plugins: () => [autoprefixer]
+								plugins: () => [ cssNext ]
 							}
 						}
 					],
