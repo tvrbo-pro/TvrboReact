@@ -35,7 +35,7 @@ if(!config.DEBUG) {
 
   if(!cssContent)
     console.error("ERROR: The CSS bundle files are not present.\n" +
-                  "       Make sure you build the app before you run the server with \"npm run build\"\n");
+                  "       Make sure you build the app before you run the server with \"make build\"\n");
 }
 
 // SERVER LOGIC
