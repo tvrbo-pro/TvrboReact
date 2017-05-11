@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class NotFound extends Component {
 	static propTypes = {
-		staticContext: React.PropTypes.object
+		staticContext: PropTypes.object
 	}
 
 	render() {

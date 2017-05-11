@@ -8,9 +8,8 @@ module.exports = {
 
 		// MAILING
     EMAIL_FROM: 'no-reply@your-domain.com',
-    // EMAIL_SERVER: 'smtp.gmail.com',
-    // EMAIL_USER: 'no-reply@domain.com',
-    // EMAIL_PASSWORD: 'xxx',
+    SMTP_HOST: 'localhost',
+    SMTP_PORT: 25,
     DEBUG_NOTIFICATIONS_EMAIL: 'Test User <test@tvrbo.pro>',
     BACKEND_PREFIX: 'https://admin.your-domain.com',
 

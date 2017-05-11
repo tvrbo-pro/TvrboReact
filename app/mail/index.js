@@ -1,36 +1,50 @@
 const fs = require('fs');
 import config from '../config/server';
 const nodemailer = require('nodemailer');
-const transporter = nodemailer.createTransport();
-const imagePattern = /<img alt="[^"]*" src="[^"]*/ig;
+var transporter;
 
-const emailFrom = `${config.APP_NAME} <${config.EMAIL_FROM}>`;
+if (config.DEBUG) {
+  var directTransport = require('nodemailer-direct-transport');
+  transporter = nodemailer.createTransport(directTransport({
+    name: config.DOMAIN
+  }));
+}
+else {
+  let smtpConfig = {
+    host: config.SMTP_HOST,
+    port: config.SMTP_PORT
+  };
+  transporter = nodemailer.createTransport(smtpConfig);
+}
 
 // Mailing
 
+const emailFrom = `${config.APP_NAME} <${config.EMAIL_FROM}>`;
+const imagePattern = /<img alt="[^"]*" src="[^"]*/ig;
+
 function imgReplaceFunction(imgStr) {
-	const matched = imgStr.match(/<img alt="[^"]*" src="([^"]*)/i);
-	if (!matched) return imgStr;
-	return {
-		filename: matched[1],
-		path: process.cwd() + '/app/mail/content/' + matched[1],
-		cid: matched[1]
-	}
+  const matched = imgStr.match(/<img alt="[^"]*" src="([^"]*)/i);
+  if (!matched) return imgStr;
+  return {
+    filename: matched[1],
+    path: process.cwd() + '/app/mail/content/' + matched[1],
+    cid: matched[1]
+  }
 }
 
-function generateAssetsFromTemplate(file) {
-	var result = {};
-	if (!file || !fs.existsSync(file)) throw new Error("ERROR: Email template does not exist");
+function getAssetsFromTemplate(file) {
+  var result = {};
+  if (!file || !fs.existsSync(file)) throw new Error("ERROR: Email template does not exist");
 
-	const template = fs.readFileSync(file).toString();
-	const images = template.match(imagePattern) || [];
+  const template = fs.readFileSync(file).toString();
+  const images = template.match(imagePattern) || [];
 
-	result.images = images.map(imgReplaceFunction);
-	result.html = template.replace(/<img alt="([^"]*)" src="([^"]*)"/ig, "<img alt=\"$1\" src=\"cid:$2\"");
-	return result;
+  result.images = images.map(imgReplaceFunction);
+  result.html = template.replace(/<img alt="([^"]*)" src="([^"]*)"/ig, "<img alt=\"$1\" src=\"cid:$2\"");
+  return result;
 }
 
-// MAIN FUNCTION
+// MAIL FUNCTION
 
 export default function sendEmail(email, tipus, parameters) {
 	var template;
@@ -40,7 +54,7 @@ export default function sendEmail(email, tipus, parameters) {
 	switch (tipus) {
 		case 'received':
 			if (!parameters.nick) return Promise.reject(new Error("Empty nick"));
-			template = generateAssetsFromTemplate(process.cwd() + '/app/mail/content/template-1.html');
+			template = getAssetsFromTemplate(process.cwd() + '/app/mail/content/template-1.html');
 
 			return transporter.sendMail({
 				from: emailFrom,

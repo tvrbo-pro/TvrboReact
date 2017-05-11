@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
 
@@ -10,16 +11,17 @@ import NotFound from './views/NotFound.jsx';
 
 import Header from './widgets/header.jsx';
 import Footer from './widgets/footer.jsx';
+import ScrollBack from './widgets/scroll-back.jsx';
 
 @withRouter
 @connect(({ app }) => ({ app }))
 class App extends React.Component {
   static propTypes = {
-    app: React.PropTypes.object.isRequired,
-    children: React.PropTypes.object,
-    params: React.PropTypes.object,
-    dispatch: React.PropTypes.func.isRequired,
-    location: React.PropTypes.object.isRequired
+    app: PropTypes.object.isRequired,
+    children: PropTypes.object,
+    params: PropTypes.object,
+    dispatch: PropTypes.func.isRequired,
+    location: PropTypes.object.isRequired
   }
 
   state = {
@@ -48,24 +50,26 @@ class App extends React.Component {
 
   render() {
     return (
-      <div id="app">
+      <ScrollBack>
+        <div id="app">
 
-        <Notifications />
+          <Notifications />
 
-        <Header />
+          <Header />
 
-        <Switch>
-          <Route path="/" exact component={View1} />
-          <Redirect from="/view2-old" to="/view2" />
-          <Route path="/view2" component={View2} />
-          <Route component={NotFound} />
-        </Switch>
+          <Switch>
+            <Route path="/" exact component={View1} />
+            <Redirect from="/view2-old" to="/view2" />
+            <Route path="/view2" component={View2} />
+            <Route component={NotFound} />
+          </Switch>
 
-        <Footer />
+          <Footer />
 
-        {/*<Cookies show={!this.props.app.cookiesAccepted} onAccept={() => this.onAcceptCookies()} />*/}
+          {/*<Cookies show={!this.props.app.cookiesAccepted} onAccept={() => this.onAcceptCookies()} />*/}
 
-      </div>
+        </div>
+      </ScrollBack>
     );
   }
 }
