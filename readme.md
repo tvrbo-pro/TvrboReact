@@ -1,6 +1,7 @@
 # TvrboReact
 
-<a href="https://snyk.io/test/github/TvrboPro/TvrboReact"><img src="https://snyk.io/test/github/TvrboPro/TvrboReact/badge.svg" alt="Known Vulnerabilities" data-canonical-src="https://snyk.io/test/github/TvrboPro/TvrboReact" style="max-width:100%;"></a>
+[![Known Vulnerabilities](https://snyk.io/test/github/TvrboPro/TvrboReact/badge.svg)](https://snyk.io/test/github/TvrboPro/TvrboReact)
+
 
 ## Features
 TvrboReact is a clean, concise and easy to understand JS starter project. It features the state of the art technologies from the React ecosystem, providing support for:
