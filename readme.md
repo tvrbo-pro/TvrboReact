@@ -1,7 +1,7 @@
 # TvrboReact
 
 ## Features
-TvrboReact is a clean, concise and easy to understand a JS starter project. It features the state of the art technologies from the React ecosystem, providing support for:
+TvrboReact is a clean, concise and easy-to-understand JS starter project. It features the state of the art technologies from the React ecosystem, providing support for:
 
 * **React**
 * **Redux** + **Redux Thunk**
