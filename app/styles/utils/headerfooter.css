@@ -1,0 +1,29 @@
+header {
+  padding: 4vh 1rem;
+  background-color: var(--headerColor);
+}
+
+header a,
+header a:visited,
+header a:focus {
+	cursor: pointer;
+  color: var(--txtColor);
+  text-decoration: none;
+}
+
+header a.active,
+header a:hover {
+  text-decoration: underline;
+}
+
+header .row-center > *:not(:last-of-type) {
+  margin-right: .5rem;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 2vh 0;
+  background-color: var(--footerColor);
+}

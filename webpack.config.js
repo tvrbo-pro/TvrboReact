@@ -1,6 +1,7 @@
 const path = require('path');
 const config = require('./app/config/server');
 const cssNext = require("postcss-cssnext");
+const postcssEasyImport = require("postcss-easy-import");
 const webpack = require('webpack');
 
 module.exports = {
@@ -64,7 +65,7 @@ module.exports = {
 					{
 						loader: 'postcss-loader',
 						options: {
-							plugins: () => [ cssNext ]
+							plugins: () => [ cssNext,postcssEasyImport ]
 						}
 					}
 				]

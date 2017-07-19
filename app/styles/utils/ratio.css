@@ -1,0 +1,14 @@
+.ratio16-9-ctn {
+    position: relative;
+    padding: 0 0 56.25% 0;
+    /* (9/16)*100 */
+    height: 0;
+}
+
+.ratio-el {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
