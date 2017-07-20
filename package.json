@@ -43,6 +43,7 @@
     "nodemailer-direct-transport": "^3.3.2",
     "object-assign": "^4.1.1",
     "postcss-cssnext": "^2.10.0",
+    "postcss-easy-import": "^2.1.0",
     "postcss-loader": "^2.0.5",
     "prop-types": "^15.5.9",
     "react": "^15.5.4",

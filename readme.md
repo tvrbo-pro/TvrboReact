@@ -201,3 +201,37 @@ To deploy the app to Heroku, follow these steps:
 * Run `heroku create <APP_NAME>`
 * Run `git push heroku master`
 * Open `https://APP_NAME.herokuapp.com` in your browser
+
+
+
+
+
+### UI Branch
+
+
+```
+
+	// check both ctn.js and txt.js for a complete list
+	import { CtnMaxWidth,CtnViewport,CtnAbsoluteCenter } from '../widgets/ctn';
+	import { FontMegrim,Bold,Underline,Color } from '../widgets/txt';
+
+	<CtnMaxWidth max="1024px">
+
+		<FontMegrim uppercase sizeClass="txt-xl">Title with Megrim Font with uppercase bool and css class for it's size</FontMegrim>
+
+		<Bold>I'am a bold span</Bold>
+
+		<p>Normal text <Bold>I'am a bold span</Bold> </p>
+
+		<Underline>Same for underline</Underline>
+		<Uppercase>Same for uppercase</Uppercase>
+
+		<Color tint="#ff5500">Colored text</Color>
+
+		<CtnViewport padding='2rem' flexClass="col-center align-items-center" bgTint='pink'> content </CtnViewport>
+
+		<CtnAbsoluteCenter max='800px' bgTint="yellow"> content </CtnAbsoluteCenter>
+
+	</CtnMaxWidth>
+
+```

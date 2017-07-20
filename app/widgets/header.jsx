@@ -1,26 +1,27 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-// import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { NavLink, Link } from "react-router-dom";
 
-// @connect(({ app }) => ({ app }))
 class Header extends Component {
-	static propTypes = {
-		// app: PropTypes.object.isRequired
-	}
-
-	render() {
-		return (
-			<div id="header">
-				<h3>Header</h3>
-				<ul>
-            <li><Link to="/">View 1</Link></li>
-            <li><Link to="/view2">View 2</Link></li>
-            <li><Link to="/view2-old">Redirect to View 2</Link></li>
-            <li><Link to="/does/not/exist">Not found</Link></li>
-          </ul>
-			</div>
-		);
-	}
+  render() {
+    return (
+      <header className="row-between align-items-center">
+        <Link to="/">
+          <img src="/media/logo.png" className="header-logo"/>
+        </Link>
+        <div className="row-center">
+          <NavLink to="/view2" activeClassName="active">
+            View 2
+          </NavLink>
+          <NavLink to="/view2-old" activeClassName="active">
+            Redirect to View 2
+          </NavLink>
+          <NavLink to="/does/not/exist" activeClassName="active">
+            Not found
+          </NavLink>
+        </div>
+      </header>
+    );
+  }
 }
 
 export default Header;

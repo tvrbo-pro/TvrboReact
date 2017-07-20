@@ -1,6 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
+import { CtnMaxWidth } from '../widgets/ctn';
+import { FontMegrim,Bold } from '../widgets/txt';
+
 @connect(({ app }) => ({ app }))
 class View2 extends Component {
 	static propTypes = {
@@ -9,10 +12,17 @@ class View2 extends Component {
 
 	render() {
 		return (
-			<div>
-				<h3>View 2</h3>
+			<CtnMaxWidth max="1024px">
+				<br/>
+				<br/>
+				<FontMegrim sizeClass="txt-xl">View 2</FontMegrim>
+				<br/>
+				<br/>
 				<pre>this.props.app = {JSON.stringify(this.props.app)}</pre>
-			</div>
+				<br/>
+				<br/>
+				<p>	Click logo to go back to <Bold>View 1</Bold></p>
+			</CtnMaxWidth>
 		);
 	}
 }
