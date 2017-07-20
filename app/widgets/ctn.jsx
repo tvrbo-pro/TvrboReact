@@ -57,6 +57,7 @@ export const CtnAbsoluteCenter = ({ children, max, bgTint }) => {
     </div>
   );
 };
+
 CtnAbsoluteCenter.propTypes = {
   max: React.PropTypes.string.isRequired,
   bgTint: React.PropTypes.string

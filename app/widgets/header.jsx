@@ -4,9 +4,9 @@ import { NavLink, Link } from "react-router-dom";
 class Header extends Component {
   render() {
     return (
-      <header className="row-between">
+      <header className="row-between align-items-center">
         <Link to="/">
-          <p>Logo</p>
+          <img src="/media/logo.png" className="header-logo"/>
         </Link>
         <div className="row-center">
           <NavLink to="/view2" activeClassName="active">

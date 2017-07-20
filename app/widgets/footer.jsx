@@ -4,7 +4,7 @@ class Footer extends Component {
   render() {
     return (
       <footer className="txt-center">
-        <p>by Tvrbo</p>
+        <p><a href="https//tvrbo.pro" target="_blank" rel="noopener"> Tvrbo 🙌 </a></p>
       </footer>
     );
   }

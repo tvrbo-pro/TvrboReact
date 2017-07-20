@@ -20,10 +20,23 @@ header .row-center > *:not(:last-of-type) {
   margin-right: .5rem;
 }
 
+.header-logo{
+	max-width: 150px;
+}
+
 footer {
   position: fixed;
   bottom: 0;
   width: 100%;
   padding: 2vh 0;
   background-color: var(--footerColor);
+}
+
+footer a,
+footer a:hover,
+footer a:visited,
+footer a:focus {
+	cursor: pointer;
+  color: var(--txtColor);
+  text-decoration: none;
 }
