@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 
 export const CtnMaxWidth = ({ children, max }) => {
   const styles = {
@@ -14,7 +15,8 @@ export const CtnMaxWidth = ({ children, max }) => {
 };
 
 CtnMaxWidth.propTypes = {
-  max: React.PropTypes.string.isRequired
+  children: PropTypes.array,
+  max: PropTypes.string.isRequired
 };
 
 export const CtnViewport = ({ children, padding, flexClass, bgTint }) => {
@@ -36,9 +38,10 @@ export const CtnViewport = ({ children, padding, flexClass, bgTint }) => {
 };
 
 CtnViewport.propTypes = {
-  padding: React.PropTypes.string,
-  flexClass: React.PropTypes.string,
-  bgTint: React.PropTypes.string
+  children: PropTypes.array,
+  padding: PropTypes.string,
+  flexClass: PropTypes.string,
+  bgTint: PropTypes.string
 };
 
 export const CtnAbsoluteCenter = ({ children, max, bgTint }) => {
@@ -59,6 +62,7 @@ export const CtnAbsoluteCenter = ({ children, max, bgTint }) => {
 };
 
 CtnAbsoluteCenter.propTypes = {
-  max: React.PropTypes.string.isRequired,
-  bgTint: React.PropTypes.string
+  children: PropTypes.array,
+  max: PropTypes.string.isRequired,
+  bgTint: PropTypes.string
 };

@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import app from './app';
-import usuari from './usuari';
+import user from './user';
 
 export default combineReducers({
 	app,
-	usuari
+	user
 });

@@ -15,7 +15,6 @@ TvrboReact is a clean, concise and easy-to-understand JS starter project. It fea
 * **React Media** (Media queries within React)
 * **React Notify Toast**
 * **Babel** (ES6, JSX, decorators, async/await)
-* **PostCSS** (CSS Next, autoprefixer)
 * **ESLint**
 * **ExpressJS**
 * **Mongoose**

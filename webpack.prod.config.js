@@ -1,10 +1,10 @@
 const path = require('path');
 const config = require('./app/config/server');
-const cssNext = require("postcss-cssnext");
 const webpack = require('webpack');
 const ExtractTextPlugin = require("extract-text-webpack-plugin"); // Independent CSS file
 
 module.exports = {
+	mode: "production",
 	context: __dirname + "/app",
 	entry: [
 		'client.jsx'
@@ -29,7 +29,7 @@ module.exports = {
 				exclude: /node_modules/,
 				loader: "babel-loader",
 				options: {
-					presets: [["es2015", { modules: false }], "stage-1"],
+					presets: [["env", { modules: false }], "stage-1"],
 					plugins: ["react-hot-loader/babel"/*, "external-helpers"*/],
 					compact: true
 				}
@@ -39,7 +39,7 @@ module.exports = {
 				exclude: /node_modules/,
 				loader: "babel-loader",
 				options: {
-					presets: [["es2015", { modules: false }], "react", "stage-1"],
+					presets: [["env", { modules: false }], "react", "stage-1"],
 					plugins: ["transform-decorators-legacy", "react-hot-loader/babel"/*, "external-helpers"*/],
 					compact: true
 				}
@@ -48,16 +48,10 @@ module.exports = {
 			// STYLES
 			{
 				test: /\.css$/,
-				loader: ExtractTextPlugin.extract({
+				use: ExtractTextPlugin.extract({
 					fallback: "style-loader",
-					loader: [
-						"css-loader",
-						{
-							loader: 'postcss-loader',
-							options: {
-								plugins: () => [ cssNext ]
-							}
-						}
+					use: [
+						"css-loader"
 					],
 					publicPath: "/"
 				})

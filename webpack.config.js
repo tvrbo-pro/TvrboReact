@@ -1,10 +1,9 @@
 const path = require('path');
 const config = require('./app/config/server');
-const cssNext = require("postcss-cssnext");
-const postcssEasyImport = require("postcss-easy-import");
 const webpack = require('webpack');
 
 module.exports = {
+	mode: "development",
 	devtool: 'inline-source-map',
 	context: path.resolve(__dirname, 'app'),
 	entry: [
@@ -40,7 +39,7 @@ module.exports = {
 				exclude: /node_modules/,
 				loader: "babel-loader",
 				options: {
-					presets: [["es2015", { modules: false }], "stage-1"],
+					presets: [["env", { modules: false }], "stage-1"],
 					plugins: ["react-hot-loader/babel"/*, "external-helpers"*/],
 					compact: true
 				}
@@ -50,7 +49,7 @@ module.exports = {
 				exclude: /node_modules/,
 				loader: "babel-loader",
 				options: {
-					presets: [["es2015", { modules: false }], "react", "stage-1"],
+					presets: [["env", { modules: false }], "react", "stage-1"],
 					plugins: ["transform-decorators-legacy", "react-hot-loader/babel"/*, "external-helpers"*/],
 					compact: true
 				}
@@ -61,13 +60,7 @@ module.exports = {
 				test: /\.css$/,
 				use: [
 					'style-loader',
-					'css-loader',
-					{
-						loader: 'postcss-loader',
-						options: {
-							plugins: () => [ cssNext,postcssEasyImport ]
-						}
-					}
+					'css-loader'
 				]
 			},
 
@@ -108,7 +101,6 @@ module.exports = {
 		new webpack.NamedModulesPlugin(),
 		new webpack.NoEmitOnErrorsPlugin()
 	],
-	// postcss: [ autoprefixer({ browsers: ['last 3 versions'] }) ],
 	devServer: {
 		hot: true,
 		proxy: {

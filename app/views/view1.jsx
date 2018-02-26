@@ -1,9 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from "prop-types";
 import { connect } from 'react-redux';
 
 import { CtnMaxWidth } from '../widgets/ctn';
-import { FontMegrim } from '../widgets/txt';
-
 
 @connect(({ app }) => ({ app }))
 class View1 extends Component {
@@ -14,13 +13,8 @@ class View1 extends Component {
 	render() {
 		return (
 			<CtnMaxWidth max="1024px">
-				<br/>
-				<br/>
-				<FontMegrim sizeClass="txt-xl">View 1</FontMegrim>
-				<br/>
-				<br/>
+				<h2>View 1</h2>
 				<pre>this.props.app = {JSON.stringify(this.props.app)}</pre>
-
 			</CtnMaxWidth>
 		);
 	}

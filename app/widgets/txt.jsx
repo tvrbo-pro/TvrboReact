@@ -1,20 +1,5 @@
-import React, { Component } from "react";
-
-export const FontMegrim = ({ children, uppercase, sizeClass }) => {
-  const styles = {
-    fontFamily: "Megrim, cursive",
-    textTransform: uppercase ? "uppercase" : "none"
-  };
-  return (
-    <span style={styles} className={sizeClass}>
-      {children}
-    </span>
-  );
-};
-
-FontMegrim.propTypes = {
-  uppercase: React.PropTypes.bool
-};
+import React from "react";
+import PropTypes from "prop-types";
 
 export const Color = ({ children, tint }) => {
   const styles = {
@@ -28,7 +13,8 @@ export const Color = ({ children, tint }) => {
 };
 
 Color.propTypes = {
-  tint: React.PropTypes.string.isRequired
+  children: PropTypes.array,
+  tint: PropTypes.string.isRequired
 };
 
 export const Bold = ({ children }) => {
@@ -42,6 +28,10 @@ export const Bold = ({ children }) => {
   );
 };
 
+Bold.propTypes = {
+  children: PropTypes.array
+};
+
 export const Underline = ({ children }) => {
   const styles = {
     textDecoration: "underline"
@@ -51,6 +41,10 @@ export const Underline = ({ children }) => {
       {children}
     </span>
   );
+};
+
+Underline.propTypes = {
+  children: PropTypes.array
 };
 
 export const Uppercase = ({ children }) => {
@@ -64,6 +58,10 @@ export const Uppercase = ({ children }) => {
   );
 };
 
+Uppercase.propTypes = {
+  children: PropTypes.array
+};
+
 export const CursorPointer = ({ children }) => {
   const styles = {
     cursor: "pointer"
@@ -73,5 +71,9 @@ export const CursorPointer = ({ children }) => {
       {children}
     </span>
   );
+};
+
+CursorPointer.propTypes = {
+  children: PropTypes.array
 };
 

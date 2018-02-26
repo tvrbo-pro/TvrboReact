@@ -121,7 +121,6 @@ function renderPage(markup, initialState) {
           <meta charset="utf-8">
           <meta http-equiv="X-UA-Compatible" content="IE=edge">
           <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-          <link href="https://fonts.googleapis.com/css?family=Megrim|Raleway:400,700" rel="stylesheet">
           <title>${config.HTML_TITLE}</title>
           <style>
           .skip-fouc {
@@ -161,7 +160,6 @@ function renderPage(markup, initialState) {
           <meta property="og:url" content="${config.SOCIAL_URL}"/>
 
           <link rel="icon" href="/media/icon.png" type="image/png" sizes="16x16"/>
-          <link href="https://fonts.googleapis.com/css?family=Megrim|Raleway:400,700" rel="stylesheet">
           <link rel="stylesheet" type="text/css" href="/main.bundle.css"/>
 
           <script>
