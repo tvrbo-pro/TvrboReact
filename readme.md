@@ -26,7 +26,7 @@ TvrboReact is a clean, concise and easy-to-understand JS starter project. It fea
 Here's how you get started:
 
 ### Requirements
-Make sure you have NodeJS 7.6 or newer installed.
+Make sure you have NodeJS 8.9.4 or newer installed.
 
 	brew install node
 
