@@ -6,11 +6,11 @@ TvrboReact is a clean, concise and easy-to-understand JS starter project. It fea
 * **React**
 * **Redux** + **Redux Thunk**
 * **React Router 4** (with scroll history management)
-* **Webpack 2** (Tree Shaking)
+* **Webpack 4**
 * **Webpack Dev Server**
-* **React Hot Loader 3**
+* **React Hot Loader**
 * **Server side rendering** (Universal)
-* **Mocha, Chai, Supertest**
+* **Mocha**
 * **Session management** (Cookies + JSON Web Tokens)
 * **React Media** (Media queries within React)
 * **React Notify Toast**
