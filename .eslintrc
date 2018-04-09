@@ -19,7 +19,6 @@
       "no-console": 0,
       "no-unused-vars": 1,
       "comma-dangle": 1,
-      "no-spaced-func": 2,
-      "space-before-function-paren": [2, "never"]
+      "no-spaced-func": 2
   }
 }
