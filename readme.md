@@ -1,6 +1,7 @@
 # TvrboReact
 
 ## Features
+
 TvrboReact is a clean, concise and easy-to-understand JS starter project. It features the state of the art technologies from the React ecosystem, providing support for:
 
 * **React**
@@ -15,6 +16,7 @@ TvrboReact is a clean, concise and easy-to-understand JS starter project. It fea
 * **React Media** (Media queries within React)
 * **React Notify Toast**
 * **Babel** (ES6, JSX, decorators, async/await)
+* **React stream rendering**
 * **ESLint**
 * **ExpressJS**
 * **Mongoose**
@@ -23,38 +25,40 @@ TvrboReact is a clean, concise and easy-to-understand JS starter project. It fea
 * **makefile** (development and server tasks)
 
 ## Getting Started
+
 Here's how you get started:
 
 ### Requirements
+
 Make sure you have NodeJS 8.9.4 or newer installed.
 
-	brew install node
+    brew install node
 
 ### Clone the Repository
 
-	git clone https://github.com/TvrboPro/TvrboReact.git
+    git clone https://github.com/TvrboPro/TvrboReact.git
 
 You should now be able to run `make info` and see the full list of commands available to you.
 
 ### Install the dependences
 
-	make install
+    make install
 
 This will also perform an initial build.
 
 ### Live development
 
-	make dev
+    make dev
 
 Then, go to `http://localhost:8080` in your browser and start developing with live reload/react hot loading!
 
 ### Production build
 
-	make build
+    make build
 
 Will package all the assets into the `public` folder.
 
-	make run
+    make run
 
 Will start the app and serve whatever is in the `public` folder. Stop it by hitting `Ctrl+C`. This is a good way to check the real performance of your app in production conditions.
 
@@ -64,10 +68,10 @@ You may want to use a process management tool like **[PM2](http://pm2.keymetrics
 
 Edit `process.yml` to set your project name, execution mode, etc. Four utility tasks are defined:
 
-	make start
-	make reload
-	make restart
-	make stop
+    make start
+    make reload
+    make restart
+    make stop
 
 ## Coding
 
@@ -75,20 +79,19 @@ Edit `process.yml` to set your project name, execution mode, etc. Four utility t
 
 To access content in your Redux stores, connect your React components
 
-	@connect({user, products} => {user, products})
-	class View extends Component {
-		...
-	}
+    @connect({user, products} => {user, products})
+    class View extends Component {
+    	...
+    }
 
 If a component uses `Route`, `Switch` or any route-aware component from **React Router**:
 
-	@withRouter
-	class View extends Component {
-		...
-	}
+    @withRouter
+    class View extends Component {
+    	...
+    }
 
 If you were to use both, leave `@withRouter` as the first decorator.
-
 
 ### Configuration
 
@@ -100,15 +103,14 @@ However, **files bundled by Webpack** should only import values from `app/config
 
 Usage:
 
-	import config from 'app/config/server';
-	// ...
-	console.log(config.HTTP_PORT);
+    import config from 'app/config/server';
+    // ...
+    console.log(config.HTTP_PORT);
 
 
-	import appConfig from 'app/config/client';
-	// ...
-	console.log(appConfig.APP_NAME);
-
+    import appConfig from 'app/config/client';
+    // ...
+    console.log(appConfig.APP_NAME);
 
 #### Priority
 
@@ -156,42 +158,43 @@ Reads all the `.po` files inside `app/locales/<lang>/` and compiles their conten
 
 ### Project structure
 
-	app
-		api               >  Implement here the API to interact with the database
-		config            >  Client/server settings, development/production.
-		lib
-			actions.js      >  Action creators
-			api.js          >  Client side api wrappers
-			session.js      >  Manage user sessions (check login, decode payload, etc)
-			...             (your own utilities)
+    app
+    	api               >  Implement here the API to interact with the database
+    	config            >  Client/server settings, development/production.
+    	lib
+    		actions.js      >  Action creators
+    		api.js          >  Client side api wrappers
+    		session.js      >  Manage user sessions (check login, decode payload, etc)
+    		...             (your own utilities)
 
-		mail              >  Mailing utilities with builtin image attachments
-		media             >  Media files that will be copied to 'public/media' on run
-		models            >  Your Mongoose data models
-		reducers          >  Implement the logic to create new states upon actions
-		store             >  Redux store creation and composition
-		styles            >  Provide styling for your components
-		views             >  JSX components intended to be used as pages
-		widgets           >  Smaller JSX components intended for encapsulation and reuse
+    	mail              >  Mailing utilities with builtin image attachments
+    	media             >  Media files that will be copied to 'public/media' on run
+    	models            >  Your Mongoose data models
+    	reducers          >  Implement the logic to create new states upon actions
+    	store             >  Redux store creation and composition
+    	styles            >  Provide styling for your components
+    	views             >  JSX components intended to be used as pages
+    	widgets           >  Smaller JSX components intended for encapsulation and reuse
 
-		app.jsx           >  The root component (define your main routes here)
-		client.jsx        >  The entry point of the client render
-		server.jsx        >  The entry point of the server render
+    	app.jsx           >  The root component (define your main routes here)
+    	client.jsx        >  The entry point of the client render
+    	server.jsx        >  The entry point of the server render
 
-	test
-		index.js           >  The test runner
-		tests              >  Write your own tests here
-		populate.js        >  (Utility) Populate sample content (DB)
-		wipe.js            >  (Utility) Remove DB contents
+    test
+    	index.js           >  The test runner
+    	tests              >  Write your own tests here
+    	populate.js        >  (Utility) Populate sample content (DB)
+    	wipe.js            >  (Utility) Remove DB contents
 
-	index.js             >  The start script for the server
-	makefile             >  Tasks definition
-	process.yml          >  PM2 config file
-	webpack.*.config.js  >  Webpack development and production settings
+    index.js             >  The start script for the server
+    makefile             >  Tasks definition
+    process.yml          >  PM2 config file
+    webpack.*.config.js  >  Webpack development and production settings
 
-	public               >  Folder where everything is packaged and served from
+    public               >  Folder where everything is packaged and served from
 
 ### Deploy to Heroku
+
 To deploy the app to Heroku, follow these steps:
 
 * [Download the Heroku toolbelt](https://toolbelt.heroku.com) and create a [Heroku account](https://www.heroku.com)
@@ -201,15 +204,9 @@ To deploy the app to Heroku, follow these steps:
 * Run `git push heroku master`
 * Open `https://APP_NAME.herokuapp.com` in your browser
 
-
-
-
-
 ### UI Branch
 
-
 ```
-
 	// check both ctn.js and txt.js for a complete list
 	import { CtnMaxWidth,CtnViewport,CtnAbsoluteCenter } from '../widgets/ctn';
 	import { FontMegrim,Bold,Underline,Color } from '../widgets/txt';
@@ -232,5 +229,4 @@ To deploy the app to Heroku, follow these steps:
 		<CtnAbsoluteCenter max='800px' bgTint="yellow"> content </CtnAbsoluteCenter>
 
 	</CtnMaxWidth>
-
 ```
