@@ -1,5 +1,5 @@
 import React from 'react';
-import { render as domRender } from 'react-dom';
+import { hydrate } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import config from './config/client';
 import { AppContainer } from 'react-hot-loader';
@@ -36,7 +36,7 @@ function initialRender() {
 				</BrowserRouter>
 			</Provider>
 		}
-		domRender(app, rootNode);
+		hydrate(app, rootNode);
 	};
 
 	renderApp(App);

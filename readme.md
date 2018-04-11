@@ -13,8 +13,6 @@ TvrboReact is a clean, concise and easy-to-understand JS starter project. It fea
 * **Server side rendering** (Universal)
 * **Mocha**
 * **Session management** (Cookies + JSON Web Tokens)
-* **React Media** (Media queries within React)
-* **React Notify Toast**
 * **Babel** (ES6, JSX, decorators, async/await)
 * **React stream rendering**
 * **ESLint**
@@ -30,13 +28,13 @@ Here's how you get started:
 
 ### Requirements
 
-Make sure you have NodeJS 8.9.4 or newer installed.
+Make sure you have NodeJS 8.11.1 or newer installed.
 
     brew install node
 
 ### Clone the Repository
 
-    git clone https://github.com/TvrboPro/TvrboReact.git
+Clone this repository into your computer.
 
 You should now be able to run `make info` and see the full list of commands available to you.
 
