@@ -16,6 +16,7 @@ TvrboReact is a clean, concise and easy-to-understand JS starter project. It fea
 * **Babel** (ES6, JSX, decorators, async/await)
 * **React stream rendering**
 * **ESLint**
+* **Prettier**
 * **ExpressJS**
 * **Mongoose**
 * **Nodemailer**
