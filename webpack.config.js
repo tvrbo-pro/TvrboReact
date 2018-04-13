@@ -2,7 +2,7 @@ const path = require("path");
 const config = require("./app/config/server");
 const webpack = require("webpack");
 
-module.exports = {
+const webpackConfig = {
 	mode: "development",
 	devtool: "inline-source-map",
 	context: path.resolve(__dirname, "app"),
@@ -57,6 +57,10 @@ module.exports = {
 
 			// STYLES
 			{
+				test: /\.less$/,
+				use: ["style-loader", "css-loader", "less-loader"]
+			},
+			{
 				test: /\.css$/,
 				use: ["style-loader", "css-loader"]
 			},
@@ -105,3 +109,5 @@ module.exports = {
 		host: "127.0.0.1"
 	}
 };
+
+module.exports = webpackConfig;

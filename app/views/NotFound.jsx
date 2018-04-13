@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { CtnMaxWidth } from '../widgets/ctn';
+import Container from '../widgets/container';
 
 class NotFound extends Component {
 	static propTypes = {
@@ -14,10 +14,10 @@ class NotFound extends Component {
 		}
 
 		return (
-			<CtnMaxWidth max="1024px">
+			<Container>
 				<h2>Not Found</h2>
 				<p>The page you requested does not exist</p>
-			</CtnMaxWidth>
+			</Container>
 		);
 	}
 }

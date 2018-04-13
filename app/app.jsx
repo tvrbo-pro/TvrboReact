@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
 
-import View1 from './views/view1.jsx';
+import Index from './views/index.jsx';
 import View2 from './views/view2.jsx';
 import NotFound from './views/NotFound.jsx';
 
@@ -54,7 +54,7 @@ class App extends React.Component {
           <Header />
 
           <Switch>
-            <Route path="/" exact component={View1} />
+            <Route path="/" exact component={Index} />
             <Redirect from="/view2-old" to="/view2" />
             <Route path="/view2" component={View2} />
             <Route component={NotFound} />

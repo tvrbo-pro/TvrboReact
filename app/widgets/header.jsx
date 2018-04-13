@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 import { NavLink, Link } from "react-router-dom";
 
+import Container from "./container";
+
 class Header extends Component {
   render() {
     return (
-      <header className="row-between align-items-center">
-        <Link to="/">
-          <img src="/media/logo.png" className="header-logo"/>
-        </Link>
-        <div className="row-center">
+      <header>
+        <Container id="header">
+          <NavLink to="/" activeClassName="active">
+            <span className="title">Tvrbo React</span>
+          </NavLink>
           <NavLink to="/view2" activeClassName="active">
             View 2
           </NavLink>
@@ -18,7 +20,7 @@ class Header extends Component {
           <NavLink to="/does/not/exist" activeClassName="active">
             Not found
           </NavLink>
-        </div>
+        </Container>
       </header>
     );
   }

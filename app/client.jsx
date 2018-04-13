@@ -10,7 +10,7 @@ import App from './app';
 
 // STYLES
 
-import './styles/index.css';
+import './styles/index.less';
 
 // CONTENT
 

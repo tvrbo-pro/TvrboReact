@@ -3,7 +3,7 @@ const config = require("./app/config/server");
 const webpack = require("webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin"); // Independent CSS file
 
-module.exports = {
+const webpackConfig = {
 	mode: "production",
 	context: __dirname + "/app",
 	entry: ["./client.jsx"],
@@ -44,6 +44,14 @@ module.exports = {
 			},
 
 			// STYLES
+			{
+				test: /\.less$/,
+				use: ExtractTextPlugin.extract({
+					fallback: "style-loader",
+					use: ["css-loader", "less-loader"],
+					publicPath: "/"
+				})
+			},
 			{
 				test: /\.css$/,
 				use: ExtractTextPlugin.extract({
@@ -91,3 +99,5 @@ module.exports = {
 		})
 	]
 };
+
+module.exports = webpackConfig;
