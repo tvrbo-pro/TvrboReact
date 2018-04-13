@@ -6,96 +6,24 @@ import Container from '../widgets/container';
 import Card from '../widgets/card';
 import { Row, Col } from "../widgets/grid";
 
-@connect(({ posts }) => ({ posts }))
-class View1 extends Component {
+@connect(({ entries }) => ({ entries }))
+class Index extends Component {
 	static propTypes = {
-		posts: PropTypes.array.isRequired
+		entries: PropTypes.array.isRequired,
+		dispatch: PropTypes.func.isRequired
 	}
 
 	render() {
 		return (
 			<Container id="index">
 				<h2>Latest content</h2>
+				<p>Below is a curated list of content provided by js.coach</p>
 				<Row>
-					<Col xs={12} sm={6} md={4}>
-						<Card title="This is the title" image="https://images.unsplash.com/photo-1520764816423-52375cbff016?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b12c35983ad53712ef4e331b59c08689&auto=format&fit=crop&w=2534&q=80"> Content goes here </Card>
-					</Col>
-					<Col xs={12} sm={6} md={4}>
-						<Card> Content
+					{this.props.entries.map(entry => <Col xs={12} sm={6} md={4} key={entry._id}>
+						<Card title={entry.name} image={entry.image} link={`/projects/${entry._id}`}>
+							<p>{entry.description}</p>
 						</Card>
-					</Col>
-					<Col xs={12} sm={6} md={4}>
-						<Card> Content
-						</Card>
-					</Col>
-					<Col xs={12} sm={6} md={4}>
-						<Card> Content
-						</Card>
-					</Col>
-					<Col xs={12} sm={6} md={4}>
-						<Card> Content
-						</Card>
-					</Col>
-					<Col xs={12} sm={6} md={4}>
-						<Card> Content
-						</Card>
-					</Col>
-					<Col xs={12} sm={6} md={4}>
-						<Card> Content
-						</Card>
-					</Col>
-					<Col xs={12} sm={6} md={4}>
-						<Card> Content
-						</Card>
-					</Col>
-					<Col xs={12} sm={6} md={4}>
-						<Card> Content
-						</Card>
-					</Col>
-					<Col xs={12} sm={6} md={4}>
-						<Card> Content
-						</Card>
-					</Col>
-					<Col xs={12} sm={6} md={4}>
-						<Card> Content
-						</Card>
-					</Col>
-					<Col xs={12} sm={6} md={4}>
-						<Card> Content
-						</Card>
-					</Col>
-					<Col xs={12} sm={6} md={4}>
-						<Card> Content
-						</Card>
-					</Col>
-					<Col xs={12} sm={6} md={4}>
-						<Card> Content
-						</Card>
-					</Col>
-					<Col xs={12} sm={6} md={4}>
-						<Card> Content
-						</Card>
-					</Col>
-					<Col xs={12} sm={6} md={4}>
-						<Card> Content
-						</Card>
-					</Col>
-					<Col xs={12} sm={6} md={4}>
-						<Card> Content
-						</Card>
-					</Col>
-					<Col xs={12} sm={6} md={4}>
-						<Card> Content
-						</Card>
-					</Col>
-					<Col xs={12} sm={6} md={4}>
-						<Card> Content
-						</Card>
-					</Col>
-					<Col xs={12} sm={6} md={4}>
-						<Card> Content
-						</Card>
-					</Col>
+					</Col>)}
 				</Row>
 
 			</Container>
@@ -103,4 +31,4 @@ class View1 extends Component {
 	}
 }
 
-export default View1;
+export default Index;

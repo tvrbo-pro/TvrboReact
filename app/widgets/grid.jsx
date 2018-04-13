@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "flexboxgrid/dist/flexboxgrid.min.css";
 
 export const Row = ({ children, className, start,
     center,

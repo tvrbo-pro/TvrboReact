@@ -4,18 +4,14 @@ import PropTypes from "prop-types";
 const Container = ({ children, xs, sm, md, lg, xl, className, ...props }) => (
 	<div {...props}>
 		<div className={className ? className + " container" : "container"}>
-			<style jsx>
+			<style>
 				{`
-					.container {
-						margin-right: auto;
-						margin-left: auto;
-						width: 100%;
-						${xs ? `max-width: ${xs}px;` : ""};
-					}
+					${xs ? `.container {
+						max-width: ${xs}px;
+					}` : ""};
 					@media (min-width: 576px) {
 						.container {
 							max-width: ${sm || xs || 560}px;
-
 						}
 					}
 					@media (min-width: 768px) {
@@ -33,7 +29,7 @@ const Container = ({ children, xs, sm, md, lg, xl, className, ...props }) => (
 							max-width: ${xl || lg || md || sm || xs || 980}px;
 						}
 					}
-				`}
+				`.replace(/[ \t\n]/g, "")}
 			</style>
 			{children}
 		</div>

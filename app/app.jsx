@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
 
+import { fetchAll } from "./lib/actions";
+
 import Index from './views/index.jsx';
+import Project from './views/project.jsx';
 import View2 from './views/view2.jsx';
 import NotFound from './views/NotFound.jsx';
 
@@ -33,6 +36,9 @@ class App extends React.Component {
   componentDidMount() {
     this.updateWindowWidth();
     window.addEventListener("resize", this.updateWindowWidth.bind(this));
+
+		// fetch the full list (descriptions and activity images)
+		this.props.dispatch(fetchAll());
   }
 
   componentWillUnmount() {
@@ -55,6 +61,7 @@ class App extends React.Component {
 
           <Switch>
             <Route path="/" exact component={Index} />
+            <Route path="/projects/:id" exact component={Project} />
             <Redirect from="/view2-old" to="/view2" />
             <Route path="/view2" component={View2} />
             <Route component={NotFound} />

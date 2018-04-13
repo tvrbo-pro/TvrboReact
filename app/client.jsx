@@ -10,6 +10,7 @@ import App from './app';
 
 // STYLES
 
+import "flexboxgrid/dist/flexboxgrid.min.css";
 import './styles/index.less';
 
 // CONTENT

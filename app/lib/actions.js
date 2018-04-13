@@ -1,26 +1,20 @@
-import { getSession, logout as apiLogout } from './api.js';
+import { getEntries } from "./api.js";
 
-// Fetching
+// Multiple fetching
 
 export function fetchAll() {
 	return dispatch => {
-		getSession()
-			.then(state => {
-				if (!state) return;
-				dispatch({ type: 'SET', ...state });
-			})
-			.catch(err => {
-				console.error(err);
-			});
-	}
+		dispatch(fetchEntries());
+		// more go here
+	};
 }
 
 // Logout
 
-export function logout() {
+export function fetchEntries() {
 	return (dispatch, getState) => {
-		apiLogout()
-			.then(() => dispatch({ type: 'RESET' }))
+		getEntries()
+			.then(entries => dispatch({ type: "SET", entries }))
 			.catch(err => console.log(err));
-	}
+	};
 }

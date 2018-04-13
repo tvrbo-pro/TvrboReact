@@ -1,6 +1,8 @@
 import { makeStore } from "./index";
 // import Promise from 'bluebird';
 
+const Entries = require("../models/entry");
+
 export async function makeInitialStore(params) {
 	const store = makeStore();
 
@@ -8,13 +10,9 @@ export async function makeInitialStore(params) {
 		// DB operations
 		var state = {};
 
-		if (params.userId) {
-			// state = await getUserState({id: params.userId});
-			state.app = { cookiesAccepted: true, watchedIntro: true };
-		}
-		// else {
-		// 	state = Object.assign({}, initialState);
-		// }
+		state.entries = await Entries.find()
+			.select("name repo lastChange description")
+			.lean();
 
 		// Set the initial state
 		store.dispatch({ type: "SET", ...state });
