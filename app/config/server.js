@@ -1,42 +1,84 @@
-// Example usage assuming HTTP_PORT is set in default.js or in production.js:
-//
-//   if TVRBO_REACT_HTTP_PORT is set as an environment variable, config.HTTP_PORT will take its value
-//   else if HTTP_PORT is set as an environment variable, config.HTTP_PORT will take its value
-//   else if NODE_ENV=production and production.js contains the key, config.HTTP_PORT will take its value
-//   else config.HTTP_PORT will take de value defined in default.js
-//
-// NOTE: Only keys defined in default.js/production.js will be used
-//       Other environment variables will be ignored
-//
+///////////////////////////////////////////////////////////////////////////////
+// ENVIRONMENT
+///////////////////////////////////////////////////////////////////////////////
 
-if(global.WEBPACK) throw new Error("FATAL: SERVER CONFIG MUST NEVER BE INCLUDED FROM THE CLIENT SIDE");
+// Variables that may be fetched from the system
+const envWhitelist = ["DEBUG", "HTTP_PORT", "JWT_SECRET"]; // ["API_KEY", "API_SECRET", ...]
 
-const VAR_PREFIX = "TVRBO_REACT_";
+///////////////////////////////////////////////////////////////////////////////
+// GENERIC
+///////////////////////////////////////////////////////////////////////////////
 
-const defaultConfig = require('./server-default.js');
-const productionConfig = require('./server-production.js');
+var config = {
+	DEBUG: true,
 
-var config = {};
+	APP_NAME: "Tvrbo React",
+	HTML_TITLE: "Tvrbo React",
+	DOMAIN: "your-domain.com", // without 'www'
+	SERVER_URL: "https://github.com/ledfusion/TvrboReact",
 
-// Base config
-if(process.env.NODE_ENV == 'production') {
-	console.log("\nUsing production settings");
-	config = Object.assign(config, defaultConfig, productionConfig);
+	// MAILING
+	EMAIL_FROM: "no-reply@your-domain.com",
+	SMTP_HOST: "localhost",
+	SMTP_PORT: 25,
+	DEBUG_NOTIFICATIONS_EMAIL: "Test User <test@tvrbo.pro>",
+	BACKEND_PREFIX: "https://admin.your-domain.com",
+
+	// SEO
+	KEYWORDS: "Tvrbo React",
+	DESCRIPTION: "Tvrbo React Description",
+	SOCIAL_IMAGE: "https://github.com/ledfusion/TvrboReact/media/social.jpg",
+	SOCIAL_URL_PUBLISHER: "https://github.com/ledfusion/TvrboReact",
+	SOCIAL_URL: "https://github.com/ledfusion/TvrboReact",
+
+	HTTP_PORT: process.env.NODE_ENV != "production" ? 3000 : 8080,
+	SESSION_MAX_AGE: 1000 * 60 * 60 * 24 * 7, // 1 week
+	CACHE_MAX_AGE: 1000 * 60 * 60 * 24 * 3, // 3 days
+	ALLOW_CORS: false,
+
+	JWT_SECRET: "KEY_HERE",
+
+	// DISABLE DATABASE
+	// MONGODB_URI: '',
+	// MONGODB_TEST_URI: '',
+
+	// ENABLE DATABASE
+	MONGODB_URI: "mongodb://localhost:27017/tvrbo_react",
+	MONGODB_TEST_URI: "mongodb://localhost:27017/tvrbo_react_test",
+
+	// RESTRICT ACCESS
+	HTTP_USER: "",
+	HTTP_PASSWORD: ""
+};
+
+///////////////////////////////////////////////////////////////////////////////
+// CUSTOM
+///////////////////////////////////////////////////////////////////////////////
+
+// config.APP_NAME = '';
+
+///////////////////////////////////////////////////////////////////////////////
+// PRODUCTION
+///////////////////////////////////////////////////////////////////////////////
+
+if (process.env.NODE_ENV == "production") {
+	config.DEBUG = false;
+	config.HTTP_PORT = 10100;
 }
-else {
-	config = defaultConfig;
+
+///////////////////////////////////////////////////////////////////////////////
+// ENVIRONMENT OVERRIDE
+///////////////////////////////////////////////////////////////////////////////
+
+for (let key of envWhitelist) {
+	if (typeof process.env[key] == "undefined") continue;
+
+	console.log(`Using environment variable "${key}" [whitelisted]`);
+	config[key] = process.env[key];
 }
 
-// Environment variables will override existing keys
-Object.keys(config).forEach(key => {
-	if(typeof process.env[VAR_PREFIX + key] != 'undefined') {
-		console.log("Using ENV variable", VAR_PREFIX + key);
-		config[key] = process.env[VAR_PREFIX + key];
-	}
-	else if(typeof process.env[key] != 'undefined') {
-		console.log("Using ENV variable", key);
-		config[key] = process.env[key];
-	}
-}, {});
+///////////////////////////////////////////////////////////////////////////////
+// DONE
+///////////////////////////////////////////////////////////////////////////////
 
 module.exports = config;

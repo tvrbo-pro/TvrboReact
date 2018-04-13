@@ -1,89 +1,122 @@
-'use strict';
+"use strict";
 
 // Override .babelrc
 require("babel-register")({
-  presets: ["es2017-node7", "react", "stage-1"],
-  plugins: ["transform-decorators-legacy"]
+	presets: ["es2017-node7", "react", "stage-1"],
+	plugins: ["transform-decorators-legacy"]
 });
 
-var config = require('./app/config/server');
-var mongoose = require('mongoose');
-mongoose.Promise = require('bluebird');
+const config = require("./app/config/server");
+const throttle = require("lodash.throttle");
+const mongoose = require("mongoose");
+mongoose.Promise = require("bluebird");
+
+// TIMESTAMPED LOGGING
+
+function log(...args) {
+	console.log(new Date().toJSON(), "|", ...args);
+}
+
+function logError(...args) {
+	console.error(new Date().toJSON(), "|", ...args);
+}
 
 // MAIN ROUTINE
-function startServer(){
-  var server = require('./app/server.jsx');
+function startServer() {
+	initTerminationHandlers();
 
-  server.listen(config.HTTP_PORT, function() {
-    console.log((new Date()).toJSON() + " | " + config.APP_NAME + " listening on port " + config.HTTP_PORT);
-  });
+	startDatabase()
+		.then(() => {
+			const server = require("./app/server.jsx");
 
-  startDatabase();
-  initTerminationHandlers();
+			server.listen(config.HTTP_PORT, function() {
+				log(config.APP_NAME + " listening on port " + config.HTTP_PORT);
+			});
+		})
+		.catch(err => {
+			logError("The server could not be started");
+			logError(err);
+			mongoose.disconnect();
+			process.exit(1);
+		});
 }
 
 // MONGODB START
-function startDatabase(){
-  if(!config.MONGODB_URI) return console.log("WARNING: The Database is disabled");
+function startDatabase() {
+	if (!config.MONGODB_URI) return Promise.resolve();
 
-  // Check that the server is listening
-  var net = require('net');
-  var sock = new net.Socket();
-  const mongoUri = require('url').parse(config.MONGODB_URI);
+	// MongoDB Event Handlers
+	mongoose.connection.on("connecting", onDbConnecting);
+	mongoose.connection.on("error", onDbConnectionError);
+	mongoose.connection.on("connected", onDbConnected);
+	mongoose.connection.once("open", onDbConnectionOpen);
+	mongoose.connection.on("reconnected", onDbReconnected);
+	mongoose.connection.on(
+		"disconnected",
+		throttle(onDbDisconnected, 1000, { leading: true })
+	);
 
-  var timeout = 2000;
-  sock.setTimeout(timeout, function() { sock.destroy(); });
-  sock.connect(mongoUri.port, mongoUri.hostname, function() {
-    // THE PORT IS LISTENING
-    sock.destroy();
+	// Connect
+	return mongoose.connect(config.MONGODB_URI);
+}
 
-    // MongoDB Event Handlers
-    mongoose.connection.on('connecting', function() { console.log('%s | Connecting to MongoDB...', (new Date()).toJSON()); });
-    mongoose.connection.on('error', function(error) {
-      console.error('%s | Error in MongoDB connection: ' + error, (new Date()).toJSON());
-      mongoose.disconnect();
-    });
-    mongoose.connection.on('connected', function() { console.log('%s | MongoDB connected', (new Date()).toJSON()); });
-    mongoose.connection.once('open', function() { console.log('%s | MongoDB connection opened', (new Date()).toJSON(), "\n"); });
-    mongoose.connection.on('reconnected', function() { console.log('%s | MongoDB reconnected', (new Date()).toJSON(), "\n"); });
-    mongoose.connection.on('disconnected', function() {
-      console.log('%s | MongoDB disconnected!', (new Date()).toJSON(), "\n");
-      mongoose.connect(config.MONGODB_URI, {server: {auto_reconnect:true}});
-    });
-
-    mongoose.connect(config.MONGODB_URI, {server: {auto_reconnect:true}});
-  });
-  sock.on('data', function() { sock.destroy(); });
-  sock.on('error', function(e) {
-    console.error("-----");
-    console.error("ERROR: The MongoDB Server is not available");
-    console.error(e.toString ? e.toString() : e);
-    console.error("-----");
-    sock.destroy();
-    process.exit();
-  });
+function onDbConnecting() {
+	log("Connecting to MongoDB...");
+}
+function onDbConnectionError(error) {
+	logError("Error in MongoDB connection: " + error);
+	mongoose.disconnect();
+}
+function onDbConnected() {
+	log("MongoDB connected");
+}
+function onDbConnectionOpen() {
+	log("MongoDB connection opened", "\n");
+}
+function onDbReconnected() {
+	log("MongoDB reconnected", "\n");
+}
+function onDbDisconnected() {
+	log("MongoDB disconnected!", "\n");
+	mongoose.connect(config.MONGODB_URI);
 }
 
 // TERMINATION HANDLERS
-function initTerminationHandlers(){
-    process.on('exit', function() { terminator(); });
+function initTerminationHandlers() {
+	process.on("exit", function() {
+		terminator();
+	});
 
-    const signals = ['SIGHUP', 'SIGINT', 'SIGQUIT', 'SIGILL', 'SIGTRAP', 'SIGABRT',
-      'SIGBUS', 'SIGFPE', 'SIGUSR1', 'SIGSEGV', 'SIGTERM' //, 'SIGUSR2'
-    ];
+	var signals = [
+		"SIGHUP",
+		"SIGINT",
+		"SIGQUIT",
+		"SIGILL",
+		"SIGTRAP",
+		"SIGABRT",
+		"SIGBUS",
+		"SIGFPE",
+		"SIGUSR1",
+		"SIGSEGV",
+		"SIGTERM" //, 'SIGUSR2'
+	];
 
-    // Removed 'SIGPIPE' from the list - bugz 852598.
-    signals.forEach(function(element) {
-        process.on(element, function() { terminator(element); });
-    });
+	// Removed 'SIGPIPE' from the list - bugz 852598.
+	signals.forEach(function(element) {
+		process.on(element, function() {
+			terminator(element);
+		});
+	});
 }
 
 // TERMINATION CALLBACK
-function terminator(signal){
-    if(!signal || typeof signal != "string") return console.log('%s | The app is terminating...', (new Date()).toJSON());
+function terminator(signal) {
+	if (!signal || typeof signal != "string")
+		return log("The app is terminating...");
 
-    console.log('%s | Received %s...', (new Date()).toJSON(), signal);
-    process.exit(1);
+	mongoose.disconnect(); // graceful shutdown
+	log(`Received ${signal}...`);
+	process.exit(0);
 }
 
 // INIT

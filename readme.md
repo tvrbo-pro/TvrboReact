@@ -2,7 +2,7 @@
 
 ## Features
 
-TvrboReact is a clean, concise and easy-to-understand JS starter project. It features the state of the art technologies from the React ecosystem, providing support for:
+TvrboReact is a clean, concise and powerful ReactJS starter project. It features the state of the art technologies from the React ecosystem, providing support for:
 
 * **React**
 * **Redux** + **Redux Thunk**
@@ -23,15 +23,17 @@ TvrboReact is a clean, concise and easy-to-understand JS starter project. It fea
 * **PM2**
 * **makefile** (development and server tasks)
 
-## Getting Started
+TvrboReact provides a rich foundation to build ReactJS applications featuring server-side rendering, session management, stream rendering, ODM, hot reloading, code linting, and more.
 
-Here's how you get started:
+## Getting Started
 
 ### Requirements
 
 Make sure you have NodeJS 8.11.1 or newer installed.
 
     brew install node
+
+Make also sure that MongoDB is installed and running.
 
 ### Clone the Repository
 
@@ -43,7 +45,9 @@ You should now be able to run `make info` and see the full list of commands avai
 
     make install
 
-This will also perform an initial build.
+This will also perform an initial build. To import initial data into the database, run:
+
+    make populate
 
 ### Live development
 
