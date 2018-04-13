@@ -17,7 +17,10 @@ class Project extends Component {
 
     render() {
         const entry = this.props.entries.find(e => e._id == this.props.match.params.id);
-        if (!entry) this.props.history.replace("/not-found");
+        if (!entry) {
+            this.props.history.replace("/not-found");
+            return null;
+        }
 
         return (
             <Container id="project">
