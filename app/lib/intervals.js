@@ -12,8 +12,8 @@ var lastError = null;
 // INIT
 
 export function initIntervals() {
-	// setInterval(fetchPrices, 1000 * 15);
-	// setInterval(fetchPriceBars, 1000 * 60 * 5);
+	setInterval(fetchPrices, 1000 * 15);
+	setInterval(fetchPriceBars, 1000 * 60 * 5);
 
 	fetchCoins()
 		.then(() => fetchPrices())
