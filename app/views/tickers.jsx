@@ -23,7 +23,8 @@ class Tickers extends Component {
 	}
 
 	socketConnect() {
-		this.ws = new WebSocket('ws://localhost:8080/ws');
+		const socketUrl = "ws://" + location.host + "/ws";
+		this.ws = new WebSocket(socketUrl);
 		this.ws.onopen = () => this.connected();
 		this.ws.onmessage = ev => this.onMessage(ev);
 		this.ws.onerror = ev => this.onError(ev);
