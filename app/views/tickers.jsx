@@ -95,6 +95,22 @@ class Tickers extends Component {
 						</Col>)
 					}
 				</Row>
+
+				{
+					!this.props.coins || !this.props.coins.length ?
+						<Row middle="xs" center="xs">
+							<Col sm={8} md={6}>
+								<Card>
+									<p className="error-text">
+										It looks like the coin list is empty.
+										<br/><br/>
+										Make sure that the API client is not hitting a rate limit
+									</p>
+								</Card>
+							</Col>
+						</Row> : null
+				}
+
 			</Container>
 		);
 	}

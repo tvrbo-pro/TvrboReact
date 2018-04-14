@@ -1,9 +1,7 @@
-import testUser from './api-user';
+// import testUser from './api-user';
 
 // RUN
 
-describe('API', function() {
-
-  testUser();
-
+describe("API", function() {
+	// testUser();
 });

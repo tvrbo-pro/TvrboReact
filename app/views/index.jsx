@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 
 import Container from '../widgets/container';
 import Columns from "react-columns";
+import { Row, Col } from "../widgets/grid";
 import Card from '../widgets/card';
 
 const columnQueries = [{
@@ -28,12 +29,28 @@ class Index extends Component {
 			<Container id="index">
 				<h2>Latest content</h2>
 				<p>Below is a curated list of content provided by js.coach</p>
+
 				<Columns columns={3} queries={columnQueries}>
 					{this.props.entries.map(entry =>
 						<Card title={entry.name} image={entry.image} link={`/projects/${entry._id}`} key={entry._id}>
 							<p>{entry.description}</p>
 						</Card>)}
 				</Columns>
+
+				{
+					!this.props.entries || !this.props.entries.length ?
+						<Row middle="xs" center="xs">
+							<Col sm={8} md={6}>
+								<Card>
+									<p className="error-text">
+										The sample content list seems to be empty.
+										<br/><br/>
+										Make sure that you run <code><strong>make populate</strong></code> and reload the page again
+									</p>
+								</Card>
+							</Col>
+						</Row> : null
+				}
 
 			</Container>
 		);
