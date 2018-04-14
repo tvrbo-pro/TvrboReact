@@ -11,14 +11,14 @@ class Header extends Component {
           <NavLink to="/" activeClassName="active">
             <span className="title">Tvrbo React</span>
           </NavLink>
-          <NavLink to="/view2" activeClassName="active">
-            View 2
-          </NavLink>
-          <NavLink to="/view2-old" activeClassName="active">
-            Redirect to View 2
+          <NavLink to="/tickers" activeClassName="active">
+            Tickers
           </NavLink>
           <NavLink to="/does/not/exist" activeClassName="active">
             Not found
+          </NavLink>
+          <NavLink to="/view2-old" activeClassName="active" style={{float: "right"}}>
+            Profile
           </NavLink>
         </Container>
       </header>
