@@ -6,7 +6,7 @@ class Footer extends Component {
     return (
       <footer>
         <Container id="footer">
-          <p>Tvrbo React starter project</p>
+          <p>Tvrbo React is a full-stack starter project</p>
         </Container>
       </footer>
     );

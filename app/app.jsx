@@ -8,6 +8,7 @@ import { fetchAll } from "./lib/actions";
 import Index from './views/index.jsx';
 import Project from './views/project.jsx';
 import Tickers from './views/tickers.jsx';
+import Chart from './views/chart.jsx';
 import NotFound from './views/not-found.jsx';
 
 import Header from './widgets/header.jsx';
@@ -62,7 +63,8 @@ class App extends React.Component {
           <Switch>
             <Route path="/" exact component={Index} />
             <Route path="/projects/:id" exact component={Project} />
-            <Route path="/tickers" component={Tickers} />
+            <Route path="/tickers" exact component={Tickers} />
+            <Route path="/charts/:pair" component={Chart} />
             <Route component={NotFound} />
           </Switch>
 

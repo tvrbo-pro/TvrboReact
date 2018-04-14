@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Container from '../widgets/container';
 import Card from '../widgets/card';
 import { Row, Col } from "../widgets/grid";
+import { capitalize } from "../lib/util";
 
 @connect(({ entries }) => ({ entries }))
 class Project extends Component {
@@ -36,9 +37,9 @@ class Project extends Component {
                             <h4>Description</h4>
                             <p>{entry.description}</p>
                             <h4>Last updated</h4>
-                            <p>{entry.lastChange}</p>
+                            <p>{capitalize(entry.lastChange)}</p>
                             <h4>Recent activity</h4>
-                            <img src={entry.image} style={{ maxHeight: 80, marginBottom: 10, backgroundColor: "#fbfbfb" }} />
+                            <img src={entry.image} style={{ maxHeight: 80, marginBottom: 10 }} />
                         </Card>
                     </Col>
                 </Row>

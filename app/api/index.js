@@ -13,9 +13,11 @@ router.use("/api", cookieParser());
 // HANDLERS
 // import userApiRoutes from './user';
 import entryApiRoutes from "./entries";
+import priceBarsApiRoutes from "./price-bars";
 
 // router.use('/api', userApiRoutes);
 router.use("/api", entryApiRoutes);
+router.use("/api", priceBarsApiRoutes);
 
 // Error handling
 router.use(function(err, req, res, next) {

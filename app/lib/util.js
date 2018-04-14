@@ -26,6 +26,89 @@ export function roundStr(amount) {
 	return (Math.round(num * 100) / 100).toFixed(2);
 }
 
+export function capitalize(str, minWordLength = 2) {
+	if (!str) return "";
+	else if (typeof str !== "string") return str;
+	var lastSpace = true;
+	var lastDot = false;
+	var startApos = false;
+	var wasCapital = false;
+	var result = "";
+
+	str = str.toLowerCase();
+
+	for (var i = 0; i < str.length; i++) {
+		switch (str[i]) {
+			case " ":
+				lastSpace = true;
+				lastDot = false;
+				result += str[i];
+				continue;
+			case "0":
+			case "1":
+			case "2":
+			case "3":
+			case "4":
+			case "5":
+			case "6":
+			case "7":
+			case "8":
+			case "9":
+				lastSpace = false;
+				lastDot = false;
+				startApos = false;
+				result += str[i];
+				continue;
+			case "-":
+			case '"':
+			case "&":
+			case ":":
+				lastDot = false;
+				startApos = false;
+				result += str[i];
+				continue;
+			case "'":
+				if (str[i - 2] && str[i - 2] == " ") startApos = true;
+				else startApos = false;
+				result += str[i];
+				lastDot = false;
+				lastSpace = false;
+				continue;
+			case ".":
+				lastDot = true;
+				lastSpace = false;
+				startApos = false;
+				result += str[i];
+				continue;
+			default:
+				if (lastSpace) {
+					if (
+						i < 1 ||
+						str.substr(i).indexOf(" ") < 0 ||
+						str.substr(i).indexOf(" ") > minWordLength
+					) {
+						result += str[i].toUpperCase();
+						wasCapital = true;
+					} else {
+						result += str[i];
+						wasCapital = false;
+					}
+				} else if ((wasCapital && lastDot) || (wasCapital && startApos)) {
+					result += str[i].toUpperCase();
+					wasCapital = true;
+				} else {
+					result += str[i];
+					wasCapital = false;
+				}
+
+				lastSpace = false;
+				lastDot = false;
+				startApos = false;
+		}
+	}
+	return result;
+}
+
 export function markdownToHTML(str, className) {
 	if (str.indexOf("[") < 0) return str;
 	var result = str + "";

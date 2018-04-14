@@ -11,6 +11,13 @@ export function getEntries() {
 	});
 }
 
+export function getPriceBars(pair) {
+	return axios.get(`/api/price-bars/${pair}`).then(response => {
+		if (response && response.error) throw new Error(response.error);
+		else return response.data;
+	});
+}
+
 // // SESSION
 
 // export function getSession() {
