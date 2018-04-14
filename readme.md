@@ -9,12 +9,13 @@ TvrboReact is a clean, concise and powerful ReactJS starter project. It features
 * **React Router 4** (with scroll history management)
 * **Webpack 4**
 * **Webpack Dev Server**
+* **Web Sockets**
+* **Server side rendering**
+* **Streamed rendering**
 * **React Hot Loader**
-* **Server side rendering** (Universal)
 * **Mocha**
 * **Session management** (Cookies + JSON Web Tokens)
-* **Babel** (ES6, JSX, decorators, async/await)
-* **React stream rendering**
+* **Babel** (ES7, JSX, decorators, async/await)
 * **ESLint**
 * **Prettier**
 * **ExpressJS**
@@ -69,7 +70,7 @@ Will start the app and serve whatever is in the `public` folder. Stop it by hitt
 
 You may want to use a process management tool like **[PM2](http://pm2.keymetrics.io/)**.
 
-Edit `process.yml` to set your project name, execution mode, etc. Four utility tasks are defined:
+Edit `process.json5` to set your project name, execution mode, etc. Four utility tasks are defined:
 
     make start
     make reload
@@ -82,15 +83,15 @@ Edit `process.yml` to set your project name, execution mode, etc. Four utility t
 
 To access content in your Redux stores, connect your React components
 
-    @connect({user, products} => {user, products})
-    class View extends Component {
+    @connect({ entries, coins } => { entries, coins })
+    class MyView extends Component {
     	...
     }
 
 If a component uses `Route`, `Switch` or any route-aware component from **React Router**:
 
     @withRouter
-    class View extends Component {
+    class MyView extends Component {
     	...
     }
 
@@ -98,7 +99,7 @@ If you were to use both, leave `@withRouter` as the first decorator.
 
 ### Configuration
 
-Though Webpack handles ES6 modules by only bundling what's imported instead of the whole module, it may not be a good idea to use a single config file for the server and the client. That's why both are split into separate files and must be included accordingly.
+Even if Webpack performs Tree Shaking on ES6 modules, it may not be a good idea to use a single config file for the server and the client. That's why both are split into separate files and must be included accordingly.
 
 **Server only code** may import `app/config/server.js` and `app/config/client.js` and use any of its values.
 
@@ -115,19 +116,10 @@ Usage:
     // ...
     console.log(appConfig.APP_NAME);
 
-#### Priority
-
-The client version will export the raw data in `app/config.client.js`.
-
-The server config will look for any key defined in `app/config/server-*.js`. If an environment variable (prefixed or not) with the same name is defined, it will override the static value.
-
-See `app/config/server.js` for more details.
-
 #### Defaults
 
 * In development, Webpack Dev Server exposes the port `8080`, acting as a proxy to the NodeJS server (port `3000`)
 * Otherwise, NodeJS listens on port `8080` when you start it with `make run`
-* The database is disabled. To enable MongoDB, edit `app/config/server-*.js` and comment/uncomment the `MONGODB_URI` and `MONGODB_TEST_URI` variables accordingly.
 
 ### Testing
 
@@ -137,7 +129,6 @@ Run `make test` and let the magic happen. This will provide you detailed informa
 
 * You can use `test/populate.js` to add your code for sample data creation in your database. Run it with `make populate`.
 * You can use `test/wipe.js` to clean any data in your local database and repopulate it again. Use `make wipe` for this.
-* Use `make todo` to highlight any pending changes you might have commented in your code
 
 <!--
 ### Localization
@@ -162,15 +153,16 @@ Reads all the `.po` files inside `app/locales/<lang>/` and compiles their conten
 ### Project structure
 
     app
-    	api               >  Implement here the API to interact with the database
-    	config            >  Client/server settings, development/production.
+    	api               >  Implement here the API handlers to interact with the database
+    	config            >  Client/server settings
     	lib
     		actions.js      >  Action creators
     		api.js          >  Client side api wrappers
     		session.js      >  Manage user sessions (check login, decode payload, etc)
+    		intervals.js    >  Recurring tasks can be initialized here
     		...             (your own utilities)
 
-    	mail              >  Mailing utilities with builtin image attachments
+    	mail              >  Mailing utilities with built-in image attachments
     	media             >  Media files that will be copied to 'public/media' on run
     	models            >  Your Mongoose data models
     	reducers          >  Implement the logic to create new states upon actions
@@ -179,9 +171,11 @@ Reads all the `.po` files inside `app/locales/<lang>/` and compiles their conten
     	views             >  JSX components intended to be used as pages
     	widgets           >  Smaller JSX components intended for encapsulation and reuse
 
+    	app-template.js   >  Generates the HTML template (used when server rendering)
     	app.jsx           >  The root component (define your main routes here)
     	client.jsx        >  The entry point of the client render
     	server.jsx        >  The entry point of the server render
+    	socket.js         >  Attaches the WebSocket server to the app handler
 
     test
     	index.js           >  The test runner
@@ -191,7 +185,7 @@ Reads all the `.po` files inside `app/locales/<lang>/` and compiles their conten
 
     index.js             >  The start script for the server
     makefile             >  Tasks definition
-    process.yml          >  PM2 config file
+    process.json5        >  PM2 config file
     webpack.*.config.js  >  Webpack development and production settings
 
     public               >  Folder where everything is packaged and served from

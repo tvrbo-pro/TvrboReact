@@ -26,7 +26,6 @@ info:
 	@echo
 	@echo "  $$ make install      Install the NPM packages and build"
 	@echo "  $$ make info         What you are reading"
-	@echo "  $$ make todo         Display To Do tasks"
 	@echo
 
 clean:
@@ -34,9 +33,6 @@ clean:
 	@echo "# Cleaning ./public"
 	@rm -Rf ./public
 	@make folders
-
-todo:
-	@notes app || echo 'Install notes with npm install -g'
 
 ####################################
 ## BUILD TARGETS
@@ -137,14 +133,14 @@ wipe:
 ## SERVER TARGETS
 
 start:
-	NODE_ENV=production DEBUG= pm2 start process.yml || make run
+	NODE_ENV=production DEBUG= pm2 start process.json5 || make run
 	pm2 dump
 
 stop:
-	pm2 stop process.yml
+	pm2 stop process.json5
 
 reload:
-	pm2 reload process.yml
+	pm2 reload process.json5
 
 restart:
-	pm2 restart process.yml
+	pm2 restart process.json5
