@@ -18,6 +18,17 @@ const Card = ({ title, image, children, className, link, ...props }) => {
 			</div>
 		)
 	}
+	else if (image) {
+		return (
+			<div className={className ? className + " card" : "card"} {...props}>
+				{
+					link ? <Link to={link}><div className="card-image" style={{ backgroundImage: "url(" + image + ")" }} /></Link> :
+						<div className="card-image" style={{ backgroundImage: "url(" + image + ")" }} />
+				}
+				<div className="card-body">{children}</div>
+			</div>
+		)
+	}
 	else if (title) {
 		return (
 			<div className={className ? className + " card" : "card"} {...props}>
