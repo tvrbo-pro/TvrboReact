@@ -7312,6 +7312,10 @@ rc@^1.1.6:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-columns@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-columns/-/react-columns-1.2.0.tgz#4d5ff52bfd634e7271b5a7b1561279cdda4d5ebe"
+
 react-deep-force-update@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/react-deep-force-update/-/react-deep-force-update-2.1.1.tgz#8ea4263cd6455a050b37445b3f08fd839d86e909"

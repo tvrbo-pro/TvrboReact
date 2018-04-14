@@ -1,11 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import Container from '../widgets/container';
+import Columns from "react-columns";
 import Card from '../widgets/card';
-import { Row, Col } from "../widgets/grid";
 
+const columnQueries = [{
+	columns: 2,
+	query: 'min-width: 600px'
+}, {
+	columns: 3,
+	query: 'min-width: 1000px'
+}];
+
+@withRouter
 @connect(({ entries }) => ({ entries }))
 class Index extends Component {
 	static propTypes = {
@@ -18,13 +28,12 @@ class Index extends Component {
 			<Container id="index">
 				<h2>Latest content</h2>
 				<p>Below is a curated list of content provided by js.coach</p>
-				<Row>
-					{this.props.entries.map(entry => <Col xs={12} sm={6} md={4} key={entry._id}>
-						<Card title={entry.name} image={entry.image} link={`/projects/${entry._id}`}>
+				<Columns columns={3} queries={columnQueries}>
+					{this.props.entries.map(entry =>
+						<Card title={entry.name} image={entry.image} link={`/projects/${entry._id}`} key={entry._id}>
 							<p>{entry.description}</p>
-						</Card>
-					</Col>)}
-				</Row>
+						</Card>)}
+				</Columns>
 
 			</Container>
 		);
