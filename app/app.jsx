@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { withRouter, Route, Switch } from 'react-router-dom';
 
 import { fetchAll } from "./lib/actions";
 
 import Index from './views/index.jsx';
 import Project from './views/project.jsx';
-import View2 from './views/view2.jsx';
-import NotFound from './views/NotFound.jsx';
+import Tickers from './views/tickers.jsx';
+import NotFound from './views/not-found.jsx';
 
 import Header from './widgets/header.jsx';
 import Footer from './widgets/footer.jsx';
@@ -62,8 +62,7 @@ class App extends React.Component {
           <Switch>
             <Route path="/" exact component={Index} />
             <Route path="/projects/:id" exact component={Project} />
-            <Redirect from="/view2-old" to="/view2" />
-            <Route path="/view2" component={View2} />
+            <Route path="/tickers" component={Tickers} />
             <Route component={NotFound} />
           </Switch>
 

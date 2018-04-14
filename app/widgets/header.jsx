@@ -8,16 +8,16 @@ class Header extends Component {
     return (
       <header>
         <Container id="header">
-          <NavLink to="/" activeClassName="active">
+          <NavLink to="/" exact={true} activeClassName="active">
             <span className="title">Tvrbo React</span>
           </NavLink>
-          <NavLink to="/tickers" activeClassName="active">
+          <NavLink to="/tickers" exact={true} activeClassName="active">
             Tickers
           </NavLink>
-          <NavLink to="/does/not/exist" activeClassName="active">
+          <NavLink to="/does/not/exist" exact={true} activeClassName="active">
             Not found
           </NavLink>
-          <NavLink to="/view2-old" activeClassName="active" style={{float: "right"}}>
+          <NavLink to="/profile" exact={true} activeClassName="active" style={{float: "right"}}>
             Profile
           </NavLink>
         </Container>

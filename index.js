@@ -11,15 +11,10 @@ const throttle = require("lodash.throttle");
 const mongoose = require("mongoose");
 mongoose.Promise = require("bluebird");
 
-// TIMESTAMPED LOGGING
-
-function log(...args) {
-	console.log(new Date().toJSON(), "|", ...args);
-}
-
-function logError(...args) {
-	console.error(new Date().toJSON(), "|", ...args);
-}
+const app = require("./app/server.jsx");
+const { initSocket } = require("./app/socket");
+const { initIntervals } = require("./app/lib/intervals");
+const { log, logError } = require("./app/lib/util");
 
 // MAIN ROUTINE
 function startServer() {
@@ -27,11 +22,16 @@ function startServer() {
 
 	startDatabase()
 		.then(() => {
-			const server = require("./app/server.jsx");
-
-			server.listen(config.HTTP_PORT, function() {
+			// Start the web server
+			const server = app.listen(config.HTTP_PORT, function() {
 				log(config.APP_NAME + " listening on port " + config.HTTP_PORT);
 			});
+
+			// Start the web socket server
+			initSocket(server);
+
+			// Start the interval tasks
+			initIntervals();
 		})
 		.catch(err => {
 			logError("The server could not be started");

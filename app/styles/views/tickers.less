@@ -1,0 +1,55 @@
+#tickers {
+	padding-left: 10px;
+	padding-right: 10px;
+
+	h2 {
+		color: #444;
+	}
+	p {
+		color: #666;
+		margin-bottom: 20px;
+	}
+	.card {
+		.card-image {
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-position: center;
+			margin: 10px 0;
+		}
+
+		.card-body {
+			padding: 10px 5px;
+			background-color: #f7f7f7;
+
+			.row.price-row {
+				& > div {
+					height: 30px;
+					padding-top: 6px;
+				}
+				& > div:nth-child(1), & > div:nth-child(2) {
+					border-right: #ccc 1px solid;
+				}
+			}
+		}
+
+		span.coin-name {
+			margin-left: 15px;
+			margin-bottom: 10px;
+			font-size: 15px;
+			line-height: 22px;
+		}
+		span.price {
+			font-size: 14px;
+			color: #333;
+			font-weight: 500;
+		}
+	}
+	@media (min-width: 600px) {
+		& > div > div {
+			margin-right: -10px;
+		}
+		.card {
+			margin-right: 10px;
+		}
+	}
+}

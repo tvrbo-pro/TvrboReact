@@ -1,10 +1,14 @@
 import { combineReducers } from "redux";
 import app from "./app";
 import entries from "./entries";
-import user from "./user";
+import coins from "./coins";
+import prices from "./prices";
+// import user from "./user";
 
 export default combineReducers({
 	app,
-	user,
-	entries
+	entries,
+	coins,
+	prices
+	// user,
 });

@@ -104,7 +104,11 @@ const webpackConfig = {
 	devServer: {
 		hot: true,
 		proxy: {
-			"*": "http://127.0.0.1:" + config.HTTP_PORT
+			"*": "http://127.0.0.1:" + config.HTTP_PORT,
+			"/ws": {
+				target: "ws://127.0.0.1:" + config.HTTP_PORT,
+				ws: true
+			}
 		},
 		host: "127.0.0.1"
 	}

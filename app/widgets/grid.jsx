@@ -43,7 +43,7 @@ Row.propTypes = {
     reverse: PropTypes.bool
 };
 
-export const Col = ({ children, className = "col-xs", xs, sm, md, lg, offset,
+export const Col = ({ children, className = "col-xs", xs = 12, sm, md, lg, offset,
     first,
     last, ...props }) => {
     const extraClassNames = (className || "").split(" ");

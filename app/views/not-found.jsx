@@ -14,7 +14,7 @@ class NotFound extends Component {
 		}
 
 		return (
-			<Container>
+			<Container id="not-found">
 				<h2>Not Found</h2>
 				<p>The page you requested does not exist</p>
 			</Container>

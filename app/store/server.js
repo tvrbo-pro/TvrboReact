@@ -1,4 +1,5 @@
 import { makeStore } from "./index";
+import { getState } from "../lib/intervals";
 // import Promise from 'bluebird';
 
 const Entries = require("../models/entry");
@@ -14,8 +15,13 @@ export async function makeInitialStore(params) {
 			.select("name repo lastChange description")
 			.lean();
 
+		const intervalState = getState();
+		state.coins = intervalState.coins;
+		state.prices = intervalState.prices;
+
 		// Set the initial state
 		store.dispatch({ type: "SET", ...state });
+
 		return store;
 	} catch (err) {
 		return store;
