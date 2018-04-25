@@ -49,33 +49,12 @@ build: folders
 	@make webpack
 
 media:
-	@if [ "`node -e \"var config = require('./app/config/server'); console.log(config.DEBUG ? 'debug' : '')\"`" ]; then \
-		make mediacopy; \
-	else \
-		make mediamin; \
-	fi
-
-watch-media:
-	watch 'make mediacopy' app/media --wait=3 -d -u
-
-mediamin:
-	@echo
-	@echo "Minifying media files to public/media"
-	#
-	# folder structure
-	@find ./app/media -type d | while read dir; do \
-		mkdir -p $${dir/.\/app\//./public/}; \
-	done
-	#
-	# files
-	@find ./app/media -type f | while read f; do \
-		imagemin --plugin=pngquant $$f > $${f/.\/app\//./public/}; \
-	done
-
-mediacopy:
 	@echo
 	@echo "# Copying media files to public/media"
 	cp -a ./app/media ./public
+
+watch-media:
+	watch 'make media' app/media --wait=3 -d -u
 
 webpack:
 	@echo
@@ -89,7 +68,7 @@ webpack:
 dev: folders
 	@echo
 	@echo "# Running Webpack Watch + Nodemon"
-	@make mediacopy
+	@make media
 	@make watch-media &
 	@make watch-webpack &
 	@make watch-server
